@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { baseOptions } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
 import { GithubInfo } from 'fumadocs-ui/components/github-info';
-import Image from 'next/image';
+
 
 const docsOptions: DocsLayoutProps = {
   ...baseOptions(),
