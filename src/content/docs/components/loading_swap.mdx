@@ -1,0 +1,104 @@
+---
+title: "Loading Swap"
+description: "A component that swaps loading states with animations"
+---
+
+
+
+
+
+<Tabs items={["Preview","code"]}>
+<Tab>
+<ComponentPreview name="loading-swap-demo"/>
+</Tab>
+<Tab>
+<ComponentSource name="loading-swap"/>
+</Tab>
+</Tabs>
+## installation
+
+### CLI
+
+<Tabs items={["npm","pnpm","yarn"]}>
+<Tab>
+``` sh
+npx shadcn@latest add http://localhost:3000/r/loading-swap.json
+```
+</Tab>
+<Tab>
+``` sh
+pnpm dlx shadcn@latest add http://localhost:3000/r/loading-swap.json
+```
+</Tab>
+<Tab>
+``` sh
+yarn dlx shadcn@latest add http://localhost:3000/r/loading-swap.json
+```
+</Tab>
+
+</Tabs>
+
+### Manual
+<Steps>
+
+<Step>Install the following dependencies</Step>
+
+<Tabs items={['npm', 'pnpm',"yarn"]}>
+  <Tab>
+    ```sh
+npm install clsx tailwind-merge lucide-react 
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+pnpm add clsx tailwind-merge lucide-react
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+ add clsx tailwind-merge lucide-react
+    ```
+  </Tab>
+</Tabs>
+
+
+<Step>If you don't have Tailwind configured yet, add it (dev deps):</Step>
+
+<Tabs items={['npm', 'pnpm',"yarn"]}>
+  <Tab>
+    ```sh
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p 
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+pnpm add -D tailwindcss postcss autoprefixer
+pnpm dlx tailwindcss init -p
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+ add clsx tailwind-merge lucide-react
+    ```
+  </Tab>
+</Tabs>
+
+<Step>Add a classname utility function</Step>
+
+```tsx
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+```
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='loading-swap' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
