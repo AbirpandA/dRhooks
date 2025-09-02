@@ -4,6 +4,6 @@ import { examples } from './registry-examples';
 
 export const registry = {
   name: 'dr-hooks.io',
-  homepage: 'http://localhost:3000/registry.json',
+  homepage: 'https://dr-hooks-iqyd4arhp-abirpandas-projects.vercel.app/registry.json',
   items: [...ui,...examples],
 } satisfies Registry;

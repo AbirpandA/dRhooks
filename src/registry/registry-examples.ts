@@ -12,6 +12,6 @@ export const examples: Registry['items'] = [
         type: 'registry:example',
       },
     ],
-    registryDependencies: ['http://localhost:3000/r/loading-swap.json'],
+    registryDependencies: ['https://dr-hooks-iqyd4arhp-abirpandas-projects.vercel.app/r/loading-swap.json'],
   },
 ];
