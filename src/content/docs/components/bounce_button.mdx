@@ -1,0 +1,104 @@
+---
+title: "Bounce Button"
+description: "An interactive button with smooth hover lift and click scale animations for enhanced user feedback."
+---
+
+
+
+
+
+<Tabs items={["Preview","code"]}>
+<Tab>
+<ComponentPreview name="bounce-button-demo"/>
+</Tab>
+<Tab>
+<ComponentSource name="bounce-button"/>
+</Tab>
+</Tabs>
+## installation
+
+### CLI
+
+<Tabs items={["npm","pnpm","yarn"]}>
+<Tab>
+``` sh
+npx shadcn@latest add https://dr-hooks-iqyd4arhp-abirpandas-projects.vercel.app/r/bounce-button.json
+```
+</Tab>
+<Tab>
+``` sh
+pnpm dlx shadcn@latest add https://dr-hooks-iqyd4arhp-abirpandas-projects.vercel.app/r/bounce-button.json
+```
+</Tab>
+<Tab>
+``` sh
+yarn dlx shadcn@latest add https://dr-hooks-iqyd4arhp-abirpandas-projects.vercel.app/r/bounce-button.json
+```
+</Tab>
+
+</Tabs>
+
+### Manual
+<Steps>
+
+<Step>Install the following dependencies</Step>
+
+<Tabs items={['npm', 'pnpm',"yarn"]}>
+  <Tab>
+    ```sh
+npm install clsx tailwind-merge 
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+pnpm add clsx tailwind-merge 
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+ add clsx tailwind-merge 
+    ```
+  </Tab>
+</Tabs>
+
+
+<Step>If you don't have Tailwind configured yet, add it (dev deps):</Step>
+
+<Tabs items={['npm', 'pnpm',"yarn"]}>
+  <Tab>
+    ```sh
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p 
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+pnpm add -D tailwindcss postcss autoprefixer
+pnpm dlx tailwindcss init -p
+    ```
+  </Tab>
+  <Tab>
+    ```sh 
+ add clsx tailwind-merge 
+    ```
+  </Tab>
+</Tabs>
+
+<Step>Add a classname utility function</Step>
+
+```tsx
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+```
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='bounce-button' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>

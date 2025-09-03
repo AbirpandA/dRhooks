@@ -12,4 +12,15 @@ export const ui: Registry['items'] = [
         }
       ]
     },
+  {
+      "name": "bounce-button",
+      "description": "Swaps content with a loading spinner without layout shift.",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "new-york/ui/bounce-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
 ];
