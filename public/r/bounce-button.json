@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "bounce-button",
   "type": "registry:component",
-  "description": "Swaps content with a loading spinner without layout shift.",
+  "description": "An interactive button with smooth hover lift and click scale animations for enhanced user feedback.",
   "files": [
     {
       "path": "src/registry/new-york/ui/bounce-button.tsx",

@@ -14,7 +14,7 @@ export const ui: Registry['items'] = [
     },
   {
       "name": "bounce-button",
-      "description": "Swaps content with a loading spinner without layout shift.",
+      "description": "An interactive button with smooth hover lift and click scale animations for enhanced user feedback.",
       "type": "registry:component",
       "files": [
         {
