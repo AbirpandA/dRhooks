@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bounce-button",
+  "type": "registry:component",
+  "description": "An interactive button with smooth hover lift and click scale animations for enhanced user feedback.",
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/bounce-button.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\ntype ButtonProps= React.HTMLAttributes<HTMLButtonElement>\n\nexport default function Bouncebutton({className,children,...props}:ButtonProps){\n    return <button {...props} className={cn(`rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 font-semibold text-gray-700 transition-all duration-150 ease-in-out hover:-translate-y-0.5 hover:border-gray-400 hover:bg-gray-200 active:scale-90`,className)}>{children}</button>\n}\n\n",
+      "type": "registry:ui"
+    }
+  ]
+}

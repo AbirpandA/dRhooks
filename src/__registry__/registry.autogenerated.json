@@ -13,6 +13,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "bounce-button",
+      "type": "registry:component",
+      "description": "An interactive button with smooth hover lift and click scale animations for enhanced user feedback.",
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/bounce-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

@@ -17,6 +17,28 @@ export const Index: Record<string, any> ={
       type: "registry:ui",
     }],
   },
+  "bounce-button": {
+    name: "bounce-button",
+    description: "An interactive button with smooth hover lift and click scale animations for enhanced user feedback.",
+    type: "registry:component",
+    files: [{
+      path: "src/registry/new-york/ui/bounce-button.tsx",
+      content: "import { cn } from \"@/lib/utils\";\ntype ButtonProps= React.HTMLAttributes<HTMLButtonElement>\n\nexport default function Bouncebutton({className,children,...props}:ButtonProps){\n    return <button {...props} className={cn(\`rounded-lg border border-gray-300 bg-gray-100 px-4 py-2 font-semibold text-gray-700 transition-all duration-150 ease-in-out hover:-translate-y-0.5 hover:border-gray-400 hover:bg-gray-200 active:scale-90\`,className)}>{children}</button>\n}\n\n",
+      type: "registry:ui",
+    }],
+  },
+  "bounce-button-demo": {
+    name: "bounce-button-demo",
+    description: "An interactive button with smooth hover lift and click scale animations for enhanced user feedback.",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/new-york/examples/bounce-button-example.tsx",
+      content: "import Bouncebutton from \"../ui/bounce-button\";\n\nexport default function BouncebuttonDemo() {\n    return <Bouncebutton>CLICK ME</Bouncebutton>\n}",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/new-york/examples/bounce-button-example.tsx")),
+    source: "import Bouncebutton from \"../ui/bounce-button\";\n\nexport default function BouncebuttonDemo() {\n    return <Bouncebutton>CLICK ME</Bouncebutton>\n}",
+  },
   "loading-swap-demo": {
     name: "loading-swap-demo",
     description: "Swaps content with a loading spinner without layout shift.",
