@@ -12,7 +12,7 @@ export const examples: Registry['items'] = [
         type: 'registry:example',
       },
     ],
-    registryDependencies: ['https://dr-hooks-iqyd4arhp-abirpandas-projects.vercel.app/r/bounce-button.json'],
+    registryDependencies: ['https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/bounce-button.json'],
   },
   {
     name: 'loading-swap-demo',
@@ -25,6 +25,6 @@ export const examples: Registry['items'] = [
         type: 'registry:example',
       },
     ],
-    registryDependencies: ['https://dr-hooks-iqyd4arhp-abirpandas-projects.vercel.app/r/loading-swap.json'],
+    registryDependencies: ['https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/loading-swap.json'],
   },
 ];
