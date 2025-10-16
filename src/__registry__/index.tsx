@@ -51,4 +51,26 @@ export const Index: Record<string, any> ={
     component: React.lazy(() => import("@/registry/new-york/examples/loading-swap-example.tsx")),
     source: "\"use client\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { LoadingSwap } from \"@/registry/new-york/ui/loading-swap\"\nimport { useTransition } from \"react\"\n\nexport default function LoadingButton() {\n  const [isLoading, startTransition] = useTransition()\n\n  return (\n    <Button\n      onClick={() => {\n        startTransition(async () => {\n          // Simulate loading state\n          await new Promise(res => setTimeout(res, 1000))\n        })\n      }}\n    >\n      <LoadingSwap isLoading={isLoading}>Click Me</LoadingSwap>\n    </Button>\n  )\n}",
   },
+  "use-debounce": {
+    name: "use-debounce",
+    description: "A small hook to debounce a value.",
+    type: "registry:component",
+    files: [{
+      path: "src/registry/new-york/hooks/use-debounce.ts",
+      content: "import { useEffect, useState } from \"react\";\n\nexport function useDebounce<T>(value: T, delay = 300) {\n  const [debounced, setDebounced] = useState(value);\n\n  useEffect(() => {\n    const id = setTimeout(() => setDebounced(value), delay);\n    return () => clearTimeout(id);\n  }, [value, delay]);\n\n  return debounced;\n}\n",
+      type: "registry:ui",
+    }],
+  },
+  "use-debounce-demo": {
+    name: "use-debounce-demo",
+    description: "Demo for useDebounce hook",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/new-york/examples/use-debounce-example.tsx",
+      content: "\"use client\";\n\nimport { useState } from \"react\";\nimport { useDebounce } from \"../hooks/use-debounce\";\n\nexport default function UseDebounceDemo() {\n  const [q, setQ] = useState(\"\");\n  const debounced = useDebounce(q, 500);\n\n  return (\n    <div className=\"space-y-2\">\n      <input\n        className=\"border px-2 py-1 rounded\"\n        value={q}\n        onChange={(e) => setQ(e.target.value)}\n        placeholder=\"Type to debounce\"\n      />\n      <div>Immediate: {q}</div>\n      <div>Debounced: {debounced}</div>\n    </div>\n  );\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/new-york/examples/use-debounce-example.tsx")),
+    source: "\"use client\";\n\nimport { useState } from \"react\";\nimport { useDebounce } from \"../hooks/use-debounce\";\n\nexport default function UseDebounceDemo() {\n  const [q, setQ] = useState(\"\");\n  const debounced = useDebounce(q, 500);\n\n  return (\n    <div className=\"space-y-2\">\n      <input\n        className=\"border px-2 py-1 rounded\"\n        value={q}\n        onChange={(e) => setQ(e.target.value)}\n        placeholder=\"Type to debounce\"\n      />\n      <div>Immediate: {q}</div>\n      <div>Debounced: {debounced}</div>\n    </div>\n  );\n}\n",
+  },
 }
