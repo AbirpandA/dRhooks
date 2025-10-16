@@ -43,10 +43,7 @@ next-env.d.ts
 #fumadocs
 .source
 
-._* # macOS resource fork files
-.Spotlight-V100
-.Trashes
-Thumbs.db
-ehthumbs.db
-Desktop.ini # Windows desktop.ini files 
-$RECYCLE.BIN/
+._* 
+.fuma
+*.fuma
+*.fuma.zip
