@@ -6,6 +6,6 @@ import { hooks, hooksExamples } from "./registry-hooks";
 export const registry = {
   name: "dr-hooks.io",
   homepage:
-    "https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/registry.json",
+    "https://dr-hooks.vercel.app/registry.json",
   items: [...ui, ...examples, ...hooks, ...hooksExamples],
 } satisfies Registry;
