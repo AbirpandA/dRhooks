@@ -35,6 +35,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "use-fetch",
+      "type": "registry:component",
+      "description": "A hook to fetch data from an API endpoint with loading and error states.",
+      "dependencies": [
+        "axios"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/hooks/use-fetch.ts",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
