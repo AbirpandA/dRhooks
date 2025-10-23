@@ -15,8 +15,8 @@ export default function UseDebounceDemo() {
         onChange={(e) => setQ(e.target.value)}
         placeholder="Type to debounce"
       />
-      <div>Immediate: {q}</div>
-      <div>Debounced: {debounced}</div>
+      <div className="p-2 text-sm">Immediate: {q}</div>
+      <div className="p-2 text-sm">Debounced: {debounced}</div>
     </div>
   );
 }

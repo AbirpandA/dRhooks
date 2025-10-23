@@ -1,6 +1,6 @@
 ---
 title: "useDebounce"
-description: "A small hook to debounce values"
+description: "A React hook to debounce a fast-changing value, delaying expensive operations until the user stops typing."
 ---
 
 <Tabs items={["Preview","code"]}>
@@ -12,28 +12,120 @@ description: "A small hook to debounce values"
 </Tab>
 </Tabs>
 
-## installation
+## Installation
 
 ### CLI
-
 <Tabs items={["npm","pnpm","yarn"]}>
 <Tab>
 ``` sh
 npx shadcn@latest add https://dr-hooks.vercel.app/r/use-debounce.json
-```
+````
+
 </Tab>
 <Tab>
-``` sh
+
+```sh
 pnpm dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-debounce.json
 ```
+
 </Tab>
 <Tab>
-``` sh
+
+```sh
 yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-debounce.json
 ```
-</Tab>
 
+</Tab>
 </Tabs>
 
+### Dependencies
 
-No external deps required. Copy the hook into your project and use it like a normal React hook.
+This hook has **no external dependencies** and only uses built-in React APIs.
+
+-----
+
+## Usage
+
+Import the hook and pass it a value that changes frequently (like from an input field). The hook will return a new value that only updates *after* the original value has stopped changing for the specified `delay`.
+
+This is ideal for expensive operations like API calls, ensuring they don't run on every keystroke.
+
+```tsx title="Example: Debounced Search Input" {1, 6, 9, 13-16}
+import { useDebounce } from "@/components/ui/use-debounce";
+import { useEffect, useState } from "react";
+
+function SearchComponent() {
+  // 1. The "live" value that updates on every keystroke
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // 2. The debounced value, which updates 500ms after searchTerm stops changing
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  // 3. This effect runs only when the *debounced* value changes
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      // Simulate an API call
+    }
+  }, [debouncedSearchTerm]);
+
+  return (
+    <div>
+      {/* This input updates the "live" value */}
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      <p>Live Value: {searchTerm}</p>
+      <p>Debounced Value: {debouncedSearchTerm}</p>
+    </div>
+  );
+}
+```
+
+-----
+
+## API Reference
+
+### Parameters
+
+The hook accepts two arguments:
+
+| Argument | Type | Description |
+| :--- | :--- | :--- |
+| **`value`** | `T` | **Required.** The fast-changing value you want to debounce. It can be any type (string, number, object, etc.). |
+| **`delay`** | `number` | *Optional.* The time in milliseconds to wait before updating the debounced value. Defaults to `300`. |
+
+### Return Values
+
+The hook returns a single value:
+
+| Value | Type | Description |
+| :--- | :--- | :--- |
+| **`debouncedValue`** | `T` | The debounced value. This value will mirror the `value` prop, but only after the `value` has stopped changing for the specified `delay` period. |
+
+-----
+
+## Key Concepts & Use Cases
+
+Debouncing is a performance optimization technique. It prevents a function from being called too frequently by adding a delay. This hook applies that concept to a React state value.
+
+### How It Works
+
+1.  The `useDebounce` hook receives the "live" `value` (e.g., `"apple"`).
+2.  It sets a timer for `delay` milliseconds (e.g., `300ms`).
+3.  If the `value` changes again *before* the timer finishes (e.g., the user types another letter, making it `"apple p"`), the hook **cancels the old timer** and sets a **new timer** for `300ms`.
+4.  This process repeats as long as the user keeps typing.
+5.  Only when the user *stops* typing for the full `delay` period does the timer successfully finish, at which point the hook updates its internal state and returns the latest `value` (e.g., `"apple pie"`).
+
+### When to Use `useDebounce`
+
+This hook is essential for optimizing performance in response to frequent user actions.
+
+1.  **Delaying API Calls:** As shown in the example, you can prevent sending a network request on every single keystroke in a search bar. This saves server resources and avoids API rate-limiting.
+2.  **Expensive Computations:** If you are performing a heavy calculation based on user input (e.g., filtering a very large list on the client), you can debounce the input to avoid running the calculation hundreds of times per second.
+3.  **UI Feedback:** Smoothing out UI elements that react to fast-changing state, such as a slider that triggers a complex re-render or data fetch.
+
+
