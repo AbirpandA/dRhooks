@@ -1,0 +1,178 @@
+---
+title: "useFetch"
+description: "A React hook to fetch data and manage loading, error, and cancellation states."
+---
+
+
+
+## Installation
+
+### CLI
+<Tabs items={["npm","pnpm","yarn"]}>
+<Tab>
+``` sh
+npx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
+```
+</Tab>
+<Tab>
+``` sh
+pnpm dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
+```
+</Tab>
+<Tab>
+``` sh
+yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
+```
+</Tab>
+
+</Tabs>
+
+
+
+### Dependencies
+
+This hook has one external peer dependency: **`axios`**. You must install it in your project.
+
+<Tabs items={["npm","pnpm","yarn"]}>
+<Tab>
+``` sh
+npm install axios
+```
+</Tab>
+<Tab>
+``` sh
+pnpm add axios
+```
+</Tab>
+<Tab>
+``` sh
+yarn add axios
+```
+</Tab>
+</Tabs>
+
+
+-----
+
+## Usage
+
+Import the hook and provide a URL. The hook will immediately begin fetching data. You can pass a generic type (e.g., `useFetch<Post>`) to get full type safety on the `data` object.
+
+```tsx title="Example Usage"
+
+
+import { useFetch } from "@/components/ui/use-fetch"; 
+
+// Define the shape of your data
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
+
+function PostComponent({ postId }) {
+  // The hook will automatically re-fetch when `postId` changes
+  const { data, loading, error, refetch } = useFetch<Post>(
+    `https://jsonplaceholder.typicode.com/posts/${postId}`
+  );
+
+  // 1. Handle the loading state
+  if (loading) {
+    return <div>Loading post...</div>;
+  }
+
+  // 2. Handle the error state
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  // 3. Render the successful data
+  return (
+    <article>
+      <h2>{data?.title}</h2>
+      <p>{data?.body}</p>
+      <button onClick={refetch}>Refetch this post</button>
+    </article>
+  );
+}
+```
+
+
+
+
+
+-----
+
+## API Reference
+
+The hook is designed to be simple to use while providing all the necessary states for data fetching.
+
+### Parameters
+
+The hook accepts two arguments:
+
+| Argument | Type | Description |
+| :--- | :--- | :--- |
+| **`url`** | `string` | **Required.** The URL to which the `GET` request will be sent. The hook will automatically re-fetch if this URL changes. |
+| **`config`** | `AxiosRequestConfig` | *Optional.* An [Axios config object](https://axios-http.com/docs/req_config). You can pass `headers`, `params`, etc. **See note on memoization below.** |
+
+### Return Values
+
+The hook returns an object with four properties:
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| **`data`** | `T | null` | The data returned from a successful request, typed as your generic `T`. It is `null` during the initial load or if an error occurs. |
+| **`loading`** | `boolean` | A boolean state that is `true` while a request is in progress and `false` once it has settled (either successfully or with an error). |
+| **`error`** | `AxiosError | null` | An `AxiosError` object if the request fails. It is `null` on a successful request. Note: This state is *not* set if the request is cancelled (e.g., on unmount). |
+| **`refetch`** | `() => void` | A memoized callback function. Calling this function will manually re-trigger the `fetchData` function using the same `url` and `config`. |
+
+-----
+
+## Important Notes
+
+### 1\. Automatic Re-fetching
+
+The hook's `useEffect` is dependent on the `fetchData` callback, which itself is memoized with `useCallback`. This callback's dependencies are `[url, config]`.
+
+This means the hook will **automatically** cancel any pending request and start a new one if the `url` string or the `config` object changes between renders.
+
+### 2\. Memoizing the `config` Object
+
+If you provide the optional `config` object, you **must memoize it** with `useMemo`.
+
+**Why?** If you create the `config` object inline (e.g., `useFetch(url, { headers: {...} })`), a new object reference is created on *every render*. The hook will see this as a change in its dependencies and trigger a new fetch, leading to an **infinite loop**.
+
+**Correct Way (with `useMemo`):**
+
+
+
+```tsx
+import { useMemo } from 'react';
+import { useFetch } from "@/hooks/use-fetch";
+
+function UserDetails({ token }) {
+  // Memoize the config object
+  const config = useMemo(() => ({
+    headers: { 'Authorization': `Bearer ${token}` }
+  }), [token]); // Only re-create the object if the token changes
+
+  const { data } = useFetch('/api/me', config);
+
+  // ...
+}
+```
+
+
+
+
+### 3\. Request Cancellation
+
+This hook uses an `AbortController` (via `useRef`) to manage request cleanup. A request will be automatically aborted in two scenarios:
+
+1.  The component using the hook unmounts.
+2.  A new fetch is triggered (by `url` or `config` changing) before the previous one has finished.
+
+This prevents memory leaks and race conditions where an old, slow request might resolve *after* a newer one.
+

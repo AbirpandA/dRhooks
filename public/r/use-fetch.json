@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-fetch",
+  "type": "registry:component",
+  "description": "A hook to fetch data from an API endpoint with loading and error states.",
+  "dependencies": [
+    "axios"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/hooks/use-fetch.ts",
+      "content": "import { useCallback, useEffect, useRef, useState } from \"react\";\nimport axios, { AxiosError, AxiosRequestConfig } from \"axios\";\n\ninterface UseFetchState<T> {\n  data: T | null;\n  error: AxiosError | null;\n  loading: boolean;\n  refetch: () => void;\n}\n\nexport function useFetch<T>(\n  url: string,\n  config?: AxiosRequestConfig\n): UseFetchState<T> {\n  const [data, setData] = useState<T | null>(null);\n  const [error, setError] = useState<AxiosError | null>(null);\n  const [loading, setLoading] = useState<boolean>(true);\n  \n  const controllerRef = useRef<AbortController | null>(null);\n  \n\n  const fetchData = useCallback(async () => {\n    if (controllerRef.current) {\n      controllerRef.current.abort();\n    }\n\n    controllerRef.current = new AbortController();\n    setLoading(true);\n\n    try {\n      const response = await axios.get<T>(url, {\n        ...config,\n        signal: controllerRef.current.signal\n      });\n      setData(response.data);\n      setError(null);\n    } catch (err) {\n      if (!axios.isCancel(err)) {\n        setError(err as AxiosError);\n        setData(null);\n      }\n    } finally {\n      setLoading(false);\n    }\n  }, [url,config]);\n\n  useEffect(() => {\n    fetchData();\n    return () => {\n      controllerRef.current?.abort();\n    };\n  }, [fetchData]);\n\n  return { data, error, loading, refetch: fetchData };\n}",
+      "type": "registry:ui"
+    }
+  ]
+}
