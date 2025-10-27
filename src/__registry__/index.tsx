@@ -71,6 +71,16 @@ export const Index: Record<string, any> ={
       type: "registry:ui",
     }],
   },
+  "use-localstorage": {
+    name: "use-localstorage",
+    description: "A hook to manage state synchronized with localStorage.",
+    type: "registry:component",
+    files: [{
+      path: "src/registry/new-york/hooks/use-localstorage.ts",
+      content: "import React from \"react\"\n\nexport function useLocalStorage<T>(key: string, initialValue: T) {\nconst [value,setValue]=React.useState<T>(()=>{\n    if(typeof window=='undefined'){\n        console.log(\`useLocalStorage: Attempted to access localStorage on server for key: \"\${key}\". Returning initialValue.\`)\n        return initialValue\n    }\n    try{\n        const item= window.localStorage.getItem(key)\n        return item? JSON.parse(item) : initialValue\n    }catch(err){\n        console.log(\`useLocalStorage: Failed to read from localStorage for key: \"\${key}\"\`, err)\n        return initialValue\n    }\n\n    \n})\n\n\n\n\nReact.useEffect(() => {\n     try{\n        if(value===undefined || value===null){\n            window.localStorage.removeItem(key)\n            console.info(\`useLocalStorage: Removed item from localStorage for key: \"\${key}\"\`)\n        }else{\n\n            window.localStorage.setItem(key,JSON.stringify(value)) \n        }\n    }catch(err){\n        console.log(\`useLocalStorage: Failed to write to localStorage for key: \"\${key}\"\`, 'Value:', value, 'Error:', err)\n    }\n}, [key,value])\n\nreturn [value,setValue]\n}",
+      type: "registry:ui",
+    }],
+  },
   "use-debounce-demo": {
     name: "use-debounce-demo",
     description: "Demo for useDebounce hook",

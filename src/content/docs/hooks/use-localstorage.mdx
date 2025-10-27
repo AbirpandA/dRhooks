@@ -1,0 +1,155 @@
+---
+title: "useLocalStorage"
+description: "A React hook to sync state with the browser's Local Storage, with built-in SSR safety and automatic JSON parsing."
+---
+
+
+## Installation
+
+
+
+### CLI
+<Tabs items={["npm","pnpm","yarn"]}>
+<Tab>
+``` sh
+npx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
+````
+
+</Tab>
+<Tab>
+
+```sh
+pnpm dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
+```
+
+</Tab>
+<Tab>
+
+```sh
+yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
+```
+
+</Tab>
+</Tabs>
+
+### manual
+
+<ComponentSource name="use-localstorage"  />
+
+
+### Dependencies
+
+This hook has **no external dependencies** and only uses built-in React APIs.
+
+-----
+
+## Usage
+
+Import the hook and use it as a drop-in replacement for `useState`. Any state changes will be automatically persisted to `localStorage` and re-hydrated on page load.
+
+It returns a state-like tuple: `[value, setValue]`.
+
+```tsx title="Example: Persistent Theme Toggle" {1, 6, 11-13}
+import { useLocalStorage } from "@/hooks/use-local-storage";
+
+type Theme = "light" | "dark";
+
+function ThemeSwitcher() {
+  // 1. Use the hook instead of useState.
+  // It reads from "theme" in localStorage or defaults to "light".
+  const [theme, setTheme] = useLocalStorage<Theme>("theme", "light");
+
+  // 2. Create a function to update the state
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
+  // 'setTheme' works just like useState's setter.
+  // All changes are automatically saved to Local Storage.
+
+  return (
+    <div data-theme={theme}>
+      <p>Current theme: {theme}</p>
+      <button onClick={toggleTheme}>
+        Switch to {theme === "light" ? "dark" : "light"}
+      </button>
+    </div>
+  );
+}
+```
+
+-----
+
+## API Reference
+
+### Parameters
+
+| Argument | Type | Description |
+| :--- | :--- | :--- |
+| **`key`** | `string` | **Required.** The unique key to use in `localStorage` (e.g., `"theme"`, `"user-token"`). |
+| **`initialValue`** | `T` | **Required.** The default value to use if no value is found in storage or if running on the server (SSR). |
+
+### Return Values
+
+The hook returns a state-like tuple `[value, setValue]`, identical to `useState`.
+
+| Value | Type | Description |
+| :--- | :--- | :--- |
+| **`value`** | `T` | The current state value. This will be the value from `localStorage` (if it exists) or the `initialValue`. |
+| **`setValue`** | `React.Dispatch<React.SetStateAction<T>>` | A state setter function. It works just like `useState`'s setter and will trigger a re-render and a write to `localStorage`. |
+
+-----
+
+## When to Use `useLocalStorage`
+
+This hook is a powerful tool for improving user experience by persisting state **across browser sessions**. Any data you store with it will still be there after the user closes their browser tab or restarts their computer.
+
+Use it for:
+
+  * **User Preferences:** Storing non-sensitive settings like a light/dark mode preference, font size, or sidebar visibility.
+  * **Session Information:** Persisting a user's JWT or authentication token so they remain logged in.
+  * **Saving Form Data:** Caching a user's progress on a long or complex form, so their data isn't lost if they accidentally refresh the page.
+  * **"Don't show this again" Banners:** Remembering if a user has already dismissed a cookie banner, newsletter popup, or marketing announcement.
+
+> **Note:** `localStorage` is **insecure**. Never use it to store sensitive information like passwords, private API keys, or credit card details.
+
+-----
+
+## Key Concepts & Features
+
+### 1\. SSR Safety
+
+This hook is safe to use in server-side rendering (SSR) frameworks like Next.js. It performs an initial check for `typeof window`. If `window` is undefined (i.e., on the server), it will log a helpful warning and return the `initialValue`, preventing your app from crashing.
+
+### 2\. Lazy Initialization
+
+The hook reads from `localStorage` **only once** on component mount, using `useState`'s lazy initializer function (`useState(() => { ... })`). This is a performance optimization that prevents `localStorage.getItem` (which is a synchronous I/O operation) from running on every render.
+
+### 3\. Automatic JSON Serialization
+
+This hook automatically runs `JSON.stringify()` when writing to storage and `JSON.parse()` when reading. This means you can store objects, arrays, or any other JSON-serializable value, not just strings.
+
+```tsx
+// This works perfectly!
+const [settings, setSettings] = useLocalStorage("user-settings", {
+  notifications: true,
+  volume: 80
+});
+
+// ...
+setSettings(prev => ({ ...prev, volume: 100 }));
+```
+
+### 4\. Automatic Storage Cleanup
+
+This hook includes a helpful feature: setting the state to `null` or `undefined` will **automatically call `localStorage.removeItem(key)`**. This is the correct way to clear the value from storage when a user logs out or resets settings.
+
+```tsx
+const [token, setToken] = useLocalStorage("auth-token", "abc-123");
+
+const logOut = () => {
+  // This will remove "auth-token" from Local Storage
+  setToken(null); 
+};
+```
+
