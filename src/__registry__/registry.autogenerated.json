@@ -49,6 +49,17 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "use-localstorage",
+      "type": "registry:component",
+      "description": "A hook to manage state synchronized with localStorage.",
+      "files": [
+        {
+          "path": "src/registry/new-york/hooks/use-localstorage.ts",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

@@ -24,6 +24,17 @@ export const hooks: Registry["items"] = [
       },
     ],
   },
+  {
+    name: "use-localstorage",
+    description: "A hook to manage state synchronized with localStorage.",
+    type: "registry:component",
+    files: [
+      {
+        path: "new-york/hooks/use-localstorage.ts",
+        type: "registry:ui",
+      },
+    ],
+  },
 ];
 
 export const hooksExamples: Registry["items"] = [
