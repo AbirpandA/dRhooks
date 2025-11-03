@@ -1,0 +1,165 @@
+---
+title: "ShimmerText"
+description: "A text component that displays a shimmering loading effect."
+---
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab>
+    <ComponentPreview name="shimmer-text-demo"/>
+  </Tab>
+  <Tab>
+    <ComponentSource name="shimmer-text"/>
+  </Tab>
+</Tabs>
+
+## Installation
+
+### CLI
+
+```npm
+npx shadcn@latest add https://dr-hooks.vercel.app/r/shimmer-text.json
+```
+### Manual
+
+<Steps>
+  <Step>
+    <strong>Install the following dependencies</strong>
+
+    ```npm
+    npm install motion/react
+    ```
+  </Step>
+
+  <Step>
+    <strong>Copy and paste the component</strong>
+
+    <ComponentSource name="shimmer-text" />
+  </Step>
+
+  <Step>
+    <strong>Update your app imports</strong>
+
+    ```tsx
+    import { ShimmerText } from "@/components/ui/shimmer-text"
+    ```
+  </Step>
+</Steps>
+
+## Usage
+
+The `ShimmerText` component adds an animated shimmer effect to text content, creating an engaging visual experience. This effect is commonly used for loading states, highlighting important text, or adding visual interest to headings and content.
+
+## Examples
+
+<Steps>
+  <Step>
+    <strong>Basic Usage</strong>
+
+    ```tsx
+    <ShimmerText>Hello World</ShimmerText>
+    ```
+  </Step>
+
+  <Step>
+    <strong>Custom Duration and Width</strong>
+
+    ```tsx
+    <ShimmerText duration={3} shimmerWidth={20}>
+      Loading...
+    </ShimmerText>
+    ```
+  </Step>
+
+  <Step>
+    <strong>Custom Color and Reverse Direction</strong>
+
+    ```tsx
+    <ShimmerText
+      shimmerColor="#FFD700"
+      reverse={true}
+      className="text-2xl font-bold"
+    >
+      Golden Shimmer
+    </ShimmerText>
+    ```
+  </Step>
+
+</Steps>
+
+## Props
+
+<ComponentSource name="shimmer-text" />
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `React.ReactNode` | Required | The text content to display with the shimmer effect |
+| `className` | `string` | `undefined` | Additional CSS classes to apply to the text |
+| `duration` | `number` | `2` | Duration of the shimmer animation in seconds |
+| `shimmerColor` | `string` | `"#ffffff"` | Color of the shimmer effect |
+| `shimmerWidth` | `number` | `10` | Width of the shimmer effect in percentage |
+| `reverse` | `boolean` | `false` | Whether to reverse the animation direction |
+
+## Features
+
+<Steps>
+  <Step>
+    <strong>Customizable Animation</strong>
+    <p>Adjust the shimmer duration, width, and color to match your design needs.</p>
+  </Step>
+
+  <Step>
+    <strong>Reversible Direction</strong>
+    <p>Control the direction of the shimmer effect with the <code>reverse</code> prop.</p>
+  </Step>
+
+  <Step>
+    <strong>Flexible Styling</strong>
+    <p>Apply custom styles through <code>className</code> and integrate with your design system.</p>
+  </Step>
+
+  <Step>
+    <strong>Accessibility</strong>
+    <p>The shimmer effect is purely decorative and doesn't affect screen readers.</p>
+  </Step>
+</Steps>
+
+## Guidelines
+
+<Callout>
+  The ShimmerText component is designed for enhancing user experience while maintaining accessibility and performance. Follow these guidelines for optimal usage:
+</Callout>
+
+<Steps>
+  <Step>
+    <strong>Use Sparingly</strong>
+    <p>Apply shimmer effects strategically to avoid overwhelming the user interface.</p>
+  </Step>
+
+  <Step>
+    <strong>Animation Duration</strong>
+    <p>Consider using slower durations (2-4 seconds) for better readability and visual comfort.</p>
+  </Step>
+
+  <Step>
+    <strong>Width Adjustment</strong>
+    <p>Adjust the shimmer width based on the text length and desired visual impact.</p>
+  </Step>
+
+  <Step>
+    <strong>Color Contrast</strong>
+    <p>Use contrasting shimmer colors for better visibility and visual appeal.</p>
+  </Step>
+</Steps>
+
+## Implementation
+
+<Callout>
+  The ShimmerText component is built using Framer Motion for smooth animations and CSS gradients for the shimmer effect. The animation is achieved by smoothly transitioning the background position of a gradient overlay.
+</Callout>
+
+### Technical Details
+
+- Built on `motion.span` from Framer Motion
+- Uses CSS gradients for the shimmer effect
+- Supports all standard HTML text attributes
+- Maintains accessibility with decorative animations

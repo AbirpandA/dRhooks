@@ -26,6 +26,20 @@
       ]
     },
     {
+      "name": "shimmer-text",
+      "type": "registry:component",
+      "description": "A text component that displays a shimmering loading effect.",
+      "dependencies": [
+        "motion/react"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/shimmer-text.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "use-debounce",
       "type": "registry:component",
       "description": "A small hook to debounce a value.",

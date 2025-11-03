@@ -23,4 +23,16 @@ export const ui: Registry['items'] = [
         }
       ]
     },
+  {
+      "name": "shimmer-text",
+      "description": "A text component that displays a shimmering loading effect.",
+      "type": "registry:component",
+      "dependencies": ["motion/react"],
+      "files": [
+        {
+          "path": "new-york/ui/shimmer-text.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
 ];
