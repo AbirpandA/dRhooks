@@ -8,33 +8,20 @@ description: "A React hook to sync state with the browser's Local Storage, with 
 
 
 
-### CLI
-<Tabs items={["npm","pnpm","yarn"]}>
+<Tabs items={["CLI","manual"]} className="pt-5 bg-transparent ">
 <Tab>
-``` sh
+``` npm 
 npx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
-````
-
-</Tab>
-<Tab>
-
-```sh
-pnpm dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
 ```
-
 </Tab>
-<Tab>
 
-```sh
-yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
-```
-
+<Tab >
+<ComponentSource name="use-localstorage"  />
 </Tab>
+
 </Tabs>
 
-### manual
 
-<ComponentSource name="use-localstorage"  />
 
 
 ### Dependencies
@@ -50,22 +37,21 @@ Import the hook and use it as a drop-in replacement for `useState`. Any state ch
 It returns a state-like tuple: `[value, setValue]`.
 
 ```tsx title="Example: Persistent Theme Toggle" {1, 6, 11-13}
+ // [!code focus] [!code ++] 
 import { useLocalStorage } from "@/hooks/use-local-storage";
 
 type Theme = "light" | "dark";
 
 function ThemeSwitcher() {
-  // 1. Use the hook instead of useState.
-  // It reads from "theme" in localStorage or defaults to "light".
+ // [!code focus] [!code ++] 1. Use the hook just like useState
   const [theme, setTheme] = useLocalStorage<Theme>("theme", "light");
 
-  // 2. Create a function to update the state
+  
   const toggleTheme = () => {
+    // [!code focus] [!code highlight] 2. Update the state as usual
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  // 'setTheme' works just like useState's setter.
-  // All changes are automatically saved to Local Storage.
 
   return (
     <div data-theme={theme}>
@@ -144,11 +130,11 @@ setSettings(prev => ({ ...prev, volume: 100 }));
 
 This hook includes a helpful feature: setting the state to `null` or `undefined` will **automatically call `localStorage.removeItem(key)`**. This is the correct way to clear the value from storage when a user logs out or resets settings.
 
-```tsx
+```tsx title="Example: Storage Cleanup" 
 const [token, setToken] = useLocalStorage("auth-token", "abc-123");
 
 const logOut = () => {
-  // This will remove "auth-token" from Local Storage
+  //  [!code highlight] 
   setToken(null); 
 };
 ```

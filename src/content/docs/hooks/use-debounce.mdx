@@ -51,7 +51,7 @@ Import the hook and pass it a value that changes frequently (like from an input 
 This is ideal for expensive operations like API calls, ensuring they don't run on every keystroke.
 
 ```tsx title="Example: Debounced Search Input" {1, 6, 9, 13-16}
-import { useDebounce } from "@/components/ui/use-debounce";
+import { useDebounce } from "@/components/ui/use-debounce"; // [!code focus] [!code ++]
 import { useEffect, useState } from "react";
 
 function SearchComponent() {
@@ -59,7 +59,7 @@ function SearchComponent() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // 2. The debounced value, which updates 500ms after searchTerm stops changing
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500); // [!code focus] [!code ++]
 
   // 3. This effect runs only when the *debounced* value changes
   useEffect(() => {

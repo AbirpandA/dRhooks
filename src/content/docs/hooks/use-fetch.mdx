@@ -8,24 +8,13 @@ description: "A React hook to fetch data and manage loading, error, and cancella
 ## Installation
 
 ### CLI
-<Tabs items={["npm","pnpm","yarn"]}>
-<Tab>
-``` sh
+
+``` npm 
 npx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
 ```
-</Tab>
-<Tab>
-``` sh
-pnpm dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
-```
-</Tab>
-<Tab>
-``` sh
-yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
-```
-</Tab>
 
-</Tabs>
+
+
 
 
 
@@ -33,23 +22,13 @@ yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
 
 This hook has one external peer dependency: **`axios`**. You must install it in your project.
 
-<Tabs items={["npm","pnpm","yarn"]}>
-<Tab>
-``` sh
+
+``` npm 
 npm install axios
 ```
-</Tab>
-<Tab>
-``` sh
-pnpm add axios
-```
-</Tab>
-<Tab>
-``` sh
-yarn add axios
-```
-</Tab>
-</Tabs>
+
+
+
 
 
 -----
@@ -61,26 +40,27 @@ Import the hook and provide a URL. The hook will immediately begin fetching data
 ```tsx title="Example Usage"
 
 
-import { useFetch } from "@/components/ui/use-fetch"; 
+import { useFetch } from "@/components/ui/use-fetch"; // [!code ++] [!code focus]
 
-// Define the shape of your data
-interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
+
+interface Post { // [!code highlight]
+  userId: number; // [!code highlight]
+  id: number;    // [!code highlight]
+  title: string; // [!code highlight]
+  body: string;  // [!code highlight]
+} // [!code highlight]
 
 function PostComponent({ postId }) {
-  // The hook will automatically re-fetch when `postId` changes
-  const { data, loading, error, refetch } = useFetch<Post>(
-    `https://jsonplaceholder.typicode.com/posts/${postId}`
-  );
 
-  // 1. Handle the loading state
+
+  const { data, loading, error, refetch } = useFetch<Post>(.  // [!code focus]
+    `https://jsonplaceholder.typicode.com/posts/${postId}`.  // [!code focus]
+  );                               // [!code focus]
+
+  // [!code highlight] 1. Handle the loading state
   if (loading) {
-    return <div>Loading post...</div>;
-  }
+    return <div>Loading post...</div>; // [!code highlight]
+  } // [!code highlight]
 
   // 2. Handle the error state
   if (error) {
