@@ -16,7 +16,8 @@ interface ShimmerTextProps{
 
 export function ShimmerText({children,className,duration=2,shimmerColor="#ffffff",shimmerWidth = 10,reverse=false}:ShimmerTextProps){
 
-  const halfWidth = shimmerWidth / 2
+  const validatedShimmerWidth = Math.max(0, Math.min(shimmerWidth, 80));
+  const halfWidth = validatedShimmerWidth / 2
   const startPercent = 50 - halfWidth
   const endPercent = 50 + halfWidth
 
