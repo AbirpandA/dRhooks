@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shimmer-text",
+  "type": "registry:component",
+  "description": "A text component that displays a shimmering loading effect.",
+  "dependencies": [
+    "motion/react"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/shimmer-text.tsx",
+      "content": "\"use client\"\nimport React from \"react\"\nimport { motion } from \"motion/react\"\nimport { cn } from \"@/lib/utils\"\n\n\ninterface ShimmerTextProps{\n  children:React.ReactNode,\n  className?:string,\n  duration?: number,\n  shimmerColor?:string,\n  shimmerWidth?:number,\n  reverse?:boolean\n}\n\n\nexport function ShimmerText({children,className,duration=2,shimmerColor=\"#ffffff\",shimmerWidth = 10,reverse=false}:ShimmerTextProps){\n\n  const validatedShimmerWidth = Math.max(0, Math.min(shimmerWidth, 80));\n  const halfWidth = validatedShimmerWidth / 2\n  const startPercent = 50 - halfWidth\n  const endPercent = 50 + halfWidth\n\n  const animationVariants={\n    initial:{backgroundPosition: reverse? \"-250% 0\":\"250% 0\"},\n    animate:{backgroundPosition: reverse? \"250% 0\":\"-250% 0\"}\n  }\n\n  const shimmerStyle = {\n    backgroundImage: `linear-gradient(\n      110deg,\n      transparent ${startPercent -10}%, \n      ${shimmerColor} ${startPercent}%,\n      ${shimmerColor} ${endPercent}%,\n      transparent ${endPercent +10}%\n    )`,\n    backgroundSize: \"250% 100%\",\n  }\n\n  return <motion.span\n  variants={animationVariants}\n  initial=\"initial\"\n  animate=\"animate\"\n  transition={{\n    repeat:Infinity,\n    ease:\"linear\",\n    duration:duration\n  }}\n\n  style={shimmerStyle}\n\n  className={cn(`bg-clip-text text-gray-200/20 `,className)}\n  >\n   {children}\n\n  </motion.span>\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

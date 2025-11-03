@@ -27,6 +27,16 @@ export const Index: Record<string, any> ={
       type: "registry:ui",
     }],
   },
+  "shimmer-text": {
+    name: "shimmer-text",
+    description: "A text component that displays a shimmering loading effect.",
+    type: "registry:component",
+    files: [{
+      path: "src/registry/new-york/ui/shimmer-text.tsx",
+      content: "\"use client\"\nimport React from \"react\"\nimport { motion } from \"motion/react\"\nimport { cn } from \"@/lib/utils\"\n\n\ninterface ShimmerTextProps{\n  children:React.ReactNode,\n  className?:string,\n  duration?: number,\n  shimmerColor?:string,\n  shimmerWidth?:number,\n  reverse?:boolean\n}\n\n\nexport function ShimmerText({children,className,duration=2,shimmerColor=\"#ffffff\",shimmerWidth = 10,reverse=false}:ShimmerTextProps){\n\n  const validatedShimmerWidth = Math.max(0, Math.min(shimmerWidth, 80));\n  const halfWidth = validatedShimmerWidth / 2\n  const startPercent = 50 - halfWidth\n  const endPercent = 50 + halfWidth\n\n  const animationVariants={\n    initial:{backgroundPosition: reverse? \"-250% 0\":\"250% 0\"},\n    animate:{backgroundPosition: reverse? \"250% 0\":\"-250% 0\"}\n  }\n\n  const shimmerStyle = {\n    backgroundImage: \`linear-gradient(\n      110deg,\n      transparent \${startPercent -10}%, \n      \${shimmerColor} \${startPercent}%,\n      \${shimmerColor} \${endPercent}%,\n      transparent \${endPercent +10}%\n    )\`,\n    backgroundSize: \"250% 100%\",\n  }\n\n  return <motion.span\n  variants={animationVariants}\n  initial=\"initial\"\n  animate=\"animate\"\n  transition={{\n    repeat:Infinity,\n    ease:\"linear\",\n    duration:duration\n  }}\n\n  style={shimmerStyle}\n\n  className={cn(\`bg-clip-text text-gray-200/20 \`,className)}\n  >\n   {children}\n\n  </motion.span>\n}\n",
+      type: "registry:ui",
+    }],
+  },
   "bounce-button-demo": {
     name: "bounce-button-demo",
     description: "An interactive button with smooth hover lift and click scale animations for enhanced user feedback.",
@@ -50,6 +60,18 @@ export const Index: Record<string, any> ={
     }],
     component: React.lazy(() => import("@/registry/new-york/examples/loading-swap-example.tsx")),
     source: "\"use client\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { LoadingSwap } from \"@/registry/new-york/ui/loading-swap\"\nimport { useTransition } from \"react\"\n\nexport default function LoadingButton() {\n  const [isLoading, startTransition] = useTransition()\n\n  return (\n    <Button\n      onClick={() => {\n        startTransition(async () => {\n          // Simulate loading state\n          await new Promise(res => setTimeout(res, 1000))\n        })\n      }}\n    >\n      <LoadingSwap isLoading={isLoading}>Click Me</LoadingSwap>\n    </Button>\n  )\n}",
+  },
+  "shimmer-text-demo": {
+    name: "shimmer-text-demo",
+    description: "A text component that displays a shimmering loading effect.",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/new-york/examples/shimmer-text-example.tsx",
+      content: "import React from 'react'\nimport { ShimmerText } from '../ui/shimmer-text'\n\nconst ShimmerTextDemo = () => {\n  return (\n    <ShimmerText  duration={3} className=\"tracking-loose text-xl\"  shimmerWidth={20} >\n          Loading...\n    </ShimmerText>\n  )\n}\n\nexport default ShimmerTextDemo",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/new-york/examples/shimmer-text-example.tsx")),
+    source: "import React from 'react'\nimport { ShimmerText } from '../ui/shimmer-text'\n\nconst ShimmerTextDemo = () => {\n  return (\n    <ShimmerText  duration={3} className=\"tracking-loose text-xl\"  shimmerWidth={20} >\n          Loading...\n    </ShimmerText>\n  )\n}\n\nexport default ShimmerTextDemo",
   },
   "use-debounce": {
     name: "use-debounce",

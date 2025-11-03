@@ -27,4 +27,17 @@ export const examples: Registry['items'] = [
     ],
     registryDependencies: ['https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/loading-swap.json'],
   },
+  {
+    name: 'shimmer-text-demo',
+    type: 'registry:example',
+    title: 'Shimmer Text',
+    description: 'A text component that displays a shimmering loading effect.',
+    files: [
+      {
+        path: 'new-york/examples/shimmer-text-example.tsx',
+        type: 'registry:example',
+      },
+    ],
+    registryDependencies: ['https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/shimmer-text.json'],
+  },
 ];

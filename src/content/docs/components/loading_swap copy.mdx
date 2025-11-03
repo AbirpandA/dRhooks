@@ -39,66 +39,78 @@ yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/loading-swap.json
 </Tabs>
 
 ### Manual
+
 <Steps>
+  <Step>
+    <strong>Install the following dependencies</strong>
 
-<Step>Install the following dependencies</Step>
+    <Tabs items={['npm', 'pnpm','yarn']}>
+      <Tab>
+        ```sh
+        npm install clsx tailwind-merge lucide-react
+        ```
+      </Tab>
+      <Tab>
+        ```sh
+        pnpm add clsx tailwind-merge lucide-react
+        ```
+      </Tab>
+      <Tab>
+        ```sh
+        yarn add clsx tailwind-merge lucide-react
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
 
-<Tabs items={['npm', 'pnpm',"yarn"]}>
-  <Tab>
-    ```sh
-npm install clsx tailwind-merge lucide-react 
+  <Step>
+    <strong>If you don't have Tailwind configured yet, add it (dev deps)</strong>
+
+    <Tabs items={['npm', 'pnpm','yarn']}>
+      <Tab>
+        ```sh
+        npm install -D tailwindcss postcss autoprefixer
+        npx tailwindcss init -p
+        ```
+      </Tab>
+      <Tab>
+        ```sh
+        pnpm add -D tailwindcss postcss autoprefixer
+        pnpm dlx tailwindcss init -p
+        ```
+      </Tab>
+      <Tab>
+        ```sh
+        yarn add -D tailwindcss postcss autoprefixer
+        yarn dlx tailwindcss init -p
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step>
+    <strong>Add a classname utility function</strong>
+
+    ```tsx
+    import { clsx, type ClassValue } from 'clsx';
+    import { twMerge } from 'tailwind-merge';
+
+    export const cn = (...inputs: ClassValue[]) => {
+      return twMerge(clsx(inputs));
+    };
     ```
-  </Tab>
-  <Tab>
-    ```sh 
-pnpm add clsx tailwind-merge lucide-react
-    ```
-  </Tab>
-  <Tab>
-    ```sh 
- add clsx tailwind-merge lucide-react
-    ```
-  </Tab>
-</Tabs>
+  </Step>
 
+  <Step>
+    <strong>Copy and paste the component</strong>
 
-<Step>If you don't have Tailwind configured yet, add it (dev deps):</Step>
+    <ComponentSource name='loading-swap' />
+  </Step>
 
-<Tabs items={['npm', 'pnpm',"yarn"]}>
-  <Tab>
-    ```sh
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p 
-    ```
-  </Tab>
-  <Tab>
-    ```sh 
-pnpm add -D tailwindcss postcss autoprefixer
-pnpm dlx tailwindcss init -p
-    ```
-  </Tab>
-  <Tab>
-    ```sh 
- add clsx tailwind-merge lucide-react
-    ```
-  </Tab>
-</Tabs>
+  <Step>
+    <strong>Update the import paths</strong>
 
-<Step>Add a classname utility function</Step>
-
-```tsx
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-export const cn = (...inputs: ClassValue[]) => {
-  return twMerge(clsx(inputs));
-};
-```
-
-<Step>Copy and paste the following code into your project</Step>
-
-<ComponentSource name='loading-swap' />
-
-<Step>Update the import paths to match your project setup</Step>
+    <p>Adjust import paths to match your project's folder structure.</p>
+  </Step>
 
 </Steps>
