@@ -1,0 +1,280 @@
+---
+title: "[ComponentName]"
+description: "A concise one-line description of what the component does and its primary use case."
+---
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab>
+    <ComponentPreview name="component-name-demo"/>
+  </Tab>
+  <Tab>
+    <ComponentSource name="component-name"/>
+  </Tab>
+</Tabs>
+
+## Installation
+
+### CLI
+
+```
+npx shadcn@latest add https://dr-hooks.vercel.app/r/component-name.json
+```
+
+### Manual
+
+<Steps>
+  <Step>
+    <strong>Install the following dependencies</strong>
+
+    ```
+    npm install [package-name]
+    ```
+  </Step>
+
+  <Step>
+    <strong>Copy and paste the component</strong>
+
+    <ComponentSource name="component-name" />
+  </Step>
+
+  <Step>
+    <strong>Update your app imports</strong>
+
+    ```
+    import { ComponentName } from "@/components/ui/component-name"
+    ```
+  </Step>
+</Steps>
+
+## Overview
+
+[2-3 sentences explaining what the component is, what problem it solves, and when developers should use it. This is your elevator pitch.]
+
+### Key Features
+
+- **Feature 1**: Brief explanation of the first major capability
+- **Feature 2**: Brief explanation of the second major capability  
+- **Feature 3**: Brief explanation of the third major capability
+- **Feature 4**: Brief explanation of additional capabilities
+
+## Usage
+
+### Basic Usage
+
+[Explain the simplest way to use the component with context]
+
+```
+<ComponentName>Basic example</ComponentName>
+```
+
+### Common Patterns
+
+<Steps>
+  <Step>
+    <strong>Pattern 1 Name</strong>
+
+    [Brief explanation of when and why to use this pattern]
+
+    ```
+    <ComponentName prop1="value">
+      Example content
+    </ComponentName>
+    ```
+  </Step>
+
+  <Step>
+    <strong>Pattern 2 Name</strong>
+
+    [Brief explanation of when and why to use this pattern]
+
+    ```
+    <ComponentName 
+      prop1="value"
+      prop2={true}
+    >
+      Example content
+    </ComponentName>
+    ```
+  </Step>
+
+  <Step>
+    <strong>Advanced Pattern</strong>
+
+    [Brief explanation of complex use case]
+
+    ```
+    <ComponentName
+      prop1="value"
+      prop2={customValue}
+      className="custom-class"
+    >
+      {dynamicContent}
+    </ComponentName>
+    ```
+  </Step>
+</Steps>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `propName` | `string` | `"default"` | Detailed explanation of what this prop controls and how it affects behavior |
+| `propName2` | `number` | `0` | Detailed explanation with examples of valid values |
+| `propName3` | `boolean` | `false` | Detailed explanation of true/false behavior |
+| `children` | `React.ReactNode` | Required | What type of content is expected |
+
+### Return Values
+[If applicable - for components that expose ref methods or return values]
+
+| Value | Type | Description |
+|-------|------|-------------|
+| `methodName` | `() => void` | Description of what this method does |
+
+## Examples
+
+### Example 1: [Use Case Name]
+
+[Explain the scenario where this example is useful]
+
+```
+<ComponentName prop="value">
+  Example implementation
+</ComponentName>
+```
+
+### Example 2: [Use Case Name]
+
+[Explain the scenario where this example is useful]
+
+```
+<ComponentName 
+  prop1="value"
+  prop2={true}
+>
+  More complex example
+</ComponentName>
+```
+
+## Key Concepts
+
+### Concept 1: [Name]
+
+[Detailed explanation of an important concept users need to understand. This could be about how the component works internally, performance considerations, or architectural decisions.]
+
+### Concept 2: [Name]
+
+[Another important concept with detailed explanation]
+
+### Concept 3: [Name]
+
+[Third concept if needed]
+
+## Best Practices
+
+<Callout>
+  [Brief introduction to the best practices section explaining why following these guidelines matters]
+</Callout>
+
+<Steps>
+  <Step>
+    <strong>Practice 1 Name</strong>
+    <p>[Detailed explanation of what to do and why it matters]</p>
+  </Step>
+
+  <Step>
+    <strong>Practice 2 Name</strong>
+    <p>[Detailed explanation with examples if needed]</p>
+  </Step>
+
+  <Step>
+    <strong>Practice 3 Name</strong>
+    <p>[Detailed explanation]</p>
+  </Step>
+</Steps>
+
+## Common Pitfalls
+
+[Optional section for components with tricky aspects]
+
+### Pitfall 1: [Name]
+
+**Problem**: [Describe what users commonly do wrong]
+
+**Solution**: [Explain the correct approach]
+
+```
+// ❌ Don't do this
+<ComponentName incorrectUsage />
+
+// ✅ Do this instead
+<ComponentName correctUsage />
+```
+
+## Accessibility
+
+[Explain accessibility features, ARIA attributes, keyboard navigation, and screen reader support]
+
+- **Keyboard Navigation**: [Describe keyboard interactions]
+- **Screen Readers**: [Explain how screen readers interact]
+- **ARIA Attributes**: [List important ARIA attributes used]
+
+## Technical Details
+
+<Callout>
+  [Brief overview of the technical implementation]
+</Callout>
+
+- Built with [technology/library]
+- Uses [specific patterns or techniques]
+- Performance characteristics
+- Browser compatibility notes
+
+## Related Components
+
+- **[ComponentName1]**: [Brief explanation of relationship]
+- **[ComponentName2]**: [Brief explanation of when to use this instead]
+
+
+## **Template Features**
+
+This template structure provides:[2][3]
+
+### **Clear Information Hierarchy**
+- Starts with installation (immediate need)
+- Moves to overview and basic usage (learning)
+- Progresses to API reference (detailed specs)
+- Ends with advanced topics (mastery)
+
+### **Comprehensive Coverage**
+- **Installation**: Both CLI and manual methods
+- **Overview**: Problem statement and value proposition
+- **Usage**: From basic to advanced examples
+- **API Reference**: Complete parameter and return value documentation
+- **Key Concepts**: Deep dives into important topics
+- **Best Practices**: Guidance on proper usage
+- **Troubleshooting**: Common issues and solutions
+- **Advanced Usage**: Power user features
+
+### **Developer-Friendly**
+- Code examples with descriptive titles
+- Inline comments highlighting key points
+- Visual callouts for warnings and important notes
+- Clear do's and don'ts
+- TypeScript support examples
+
+### **Flexible Sections**
+You can omit sections that don't apply to your specific component/hook:
+- Remove "Common Pitfalls" if there aren't any
+- Skip "Performance Considerations" for simple hooks
+- Omit "Related Components/Hooks" if standalone
+- Remove "Browser Compatibility" if not relevant
+
+### **Consistent Formatting**
+- Uses markdown tables for structured data
+- Code blocks with language and title annotations
+- Callouts for important information
+- Steps for sequential processes
+- Tabs for alternative views
+

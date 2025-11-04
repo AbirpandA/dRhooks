@@ -1,116 +1,188 @@
 ---
-title: "Bounce Button"
-description: "An interactive button with smooth hover lift and click scale animations for enhanced user feedback."
+title: "BounceButton"
+description: "An interactive button component that provides delightful bounce animations on hover and click interactions."
 ---
 
-
-
-
-
-<Tabs items={["Preview","code"]}>
-<Tab>
-<ComponentPreview name="bounce-button-demo"/>
-</Tab>
-<Tab>
-<ComponentSource name="bounce-button"/>
-</Tab>
+<Tabs items={["Preview", "Code"]}>
+  <Tab>
+    <ComponentPreview name="bounce-button-demo"/>
+  </Tab>
+  <Tab>
+    <ComponentSource name="bounce-button"/>
+  </Tab>
 </Tabs>
-## installation
+
+## Installation
 
 ### CLI
 
-<Tabs items={["npm","pnpm","yarn"]}>
-<Tab>
-``` sh
+```npm
 npx shadcn@latest add https://dr-hooks.vercel.app/r/bounce-button.json
 ```
-</Tab>
-<Tab>
-``` sh
-pnpm dlx shadcn@latest add https://dr-hooks.vercel.app/r/bounce-button.json
-```
-</Tab>
-<Tab>
-``` sh
-yarn dlx shadcn@latest add https://dr-hooks.vercel.app/r/bounce-button.json
-```
-</Tab>
-
-</Tabs>
 
 ### Manual
 
 <Steps>
   <Step>
-    <strong>Install the following dependencies</strong>
-
-    <Tabs items={['npm', 'pnpm','yarn']}>
-      <Tab>
-        ```sh
-        npm install clsx tailwind-merge
-        ```
-      </Tab>
-      <Tab>
-        ```sh
-        pnpm add clsx tailwind-merge
-        ```
-      </Tab>
-      <Tab>
-        ```sh
-        yarn add clsx tailwind-merge
-        ```
-      </Tab>
-    </Tabs>
+    <strong>Copy and paste the component</strong>
+    <ComponentSource name="bounce-button" />
   </Step>
 
   <Step>
-    <strong>If you don't have Tailwind configured yet, add it (dev deps)</strong>
-
-    <Tabs items={['npm', 'pnpm','yarn']}>
-      <Tab>
-        ```sh
-        npm install -D tailwindcss postcss autoprefixer
-        npx tailwindcss init -p
-        ```
-      </Tab>
-      <Tab>
-        ```sh
-        pnpm add -D tailwindcss postcss autoprefixer
-        pnpm dlx tailwindcss init -p
-        ```
-      </Tab>
-      <Tab>
-        ```sh
-        yarn add -D tailwindcss postcss autoprefixer
-        yarn dlx tailwindcss init -p
-        ```
-      </Tab>
-    </Tabs>
+    <strong>Update your app imports</strong>
+    ```tsx
+    import { BounceButton } from "@/components/ui/bounce-button"
+    ```
   </Step>
+</Steps>
 
+## Overview
+
+The BounceButton component is a playful and interactive button that adds subtle animation effects to enhance user interaction. It features a gentle bounce effect on hover and a satisfying scale reduction on click, making it perfect for calls-to-action and interactive elements that need a touch of personality.
+
+### Key Features
+
+- **Hover Animation**: Slight upward translation effect on hover for a floating appearance
+- **Click Animation**: Smooth scale reduction on click for tactile feedback
+- **Customizable**: Fully customizable through className props
+- **Accessibility**: Built with native button semantics for optimal accessibility
+
+## Usage
+
+### Basic Usage
+
+```tsx
+<BounceButton>Click Me</BounceButton>
+```
+
+### Common Patterns
+
+<Steps>
   <Step>
-    <strong>Add a classname utility function</strong>
+    <strong>Basic Button</strong>
+    
+    Use the default styling for a clean, minimal look.
 
     ```tsx
-    import { clsx, type ClassValue } from 'clsx';
-    import { twMerge } from 'tailwind-merge';
-
-    export const cn = (...inputs: ClassValue[]) => {
-      return twMerge(clsx(inputs));
-    };
+    <BounceButton>Click Me</BounceButton>
     ```
   </Step>
 
   <Step>
-    <strong>Copy and paste the component</strong>
+    <strong>Custom Styled Button</strong>
+    
+    Customize the appearance using className prop.
 
-    <ComponentSource name='bounce-button' />
+    ```tsx
+    <BounceButton className="bg-blue-500 text-white">
+      Custom Button
+    </BounceButton>
+    ```
   </Step>
 
   <Step>
-    <strong>Update the import paths</strong>
+    <strong>With Click Handler</strong>
+    
+    Add interactivity with event handlers.
 
-    <p>Adjust import paths to match your project's folder structure.</p>
+    ```tsx
+    <BounceButton onClick={() => console.log("Button clicked!")}>
+      Interactive Button
+    </BounceButton>
+    ```
+  </Step>
+</Steps>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `React.ReactNode` | Required | The content to be displayed inside the button |
+| `className` | `string` | `undefined` | Additional CSS classes to customize the button's appearance |
+| `...props` | `HTMLAttributes<HTMLButtonElement>` | - | All native HTML button attributes are supported |
+
+## Examples
+
+### Example 1: Basic Button
+
+Simple implementation with default styling.
+
+```tsx
+<BounceButton>Click Me</BounceButton>
+```
+
+### Example 2: Customized Button
+
+Button with custom styling applied.
+
+```tsx
+<BounceButton 
+  className="bg-purple-500 text-white px-6 py-3 rounded-full"
+  onClick={() => alert("Hello!")}
+>
+  Custom Purple Button
+</BounceButton>
+```
+
+## Key Concepts
+
+### Animation Details
+
+The button implements two main animation effects:
+1. A slight upward translation (-0.5 units) on hover
+2. A scale reduction to 90% on click/active state
+
+These animations are achieved using CSS transforms and transitions, ensuring smooth and performant animations.
+
+### Styling Architecture
+
+The button uses a combination of:
+- Base styles for consistent appearance
+- Transition properties for smooth animations
+- Transform properties for movement effects
+- Hover and active states for interactivity
+
+## Best Practices
+
+<Callout>
+  Follow these guidelines to ensure optimal usage of the BounceButton component.
+</Callout>
+
+<Steps>
+  <Step>
+    <strong>Use Meaningful Labels</strong>
+    <p>Always provide clear, action-oriented text for the button content.</p>
   </Step>
 
+  <Step>
+    <strong>Maintain Visual Hierarchy</strong>
+    <p>Use custom styling thoughtfully to maintain proper visual hierarchy in your UI.</p>
+  </Step>
+
+  <Step>
+    <strong>Consider Animation Context</strong>
+    <p>Be mindful of where you use animated buttons to avoid overwhelming the user interface.</p>
+  </Step>
 </Steps>
+
+## Accessibility
+
+The BounceButton component is built on top of the native HTML `<button>` element, ensuring:
+
+- **Keyboard Navigation**: Fully keyboard accessible
+- **Screen Readers**: Proper semantic meaning through native button element
+- **Focus States**: Visible focus indicators for keyboard navigation
+
+## Technical Details
+
+<Callout>
+  The BounceButton is built with simplicity and performance in mind.
+</Callout>
+
+- Built with React and TypeScript
+- Uses CSS transforms for performant animations
+- Leverages CSS transitions for smooth effects
+- Implements native button semantics
+

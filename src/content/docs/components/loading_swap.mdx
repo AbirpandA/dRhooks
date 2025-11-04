@@ -1,0 +1,261 @@
+---
+title: "LoadingSwap"
+description: "A versatile component that seamlessly transitions between content and a loading spinner, perfect for async operations."
+---
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab>
+    <ComponentPreview name="loading-swap-demo"/>
+  </Tab>
+  <Tab>
+    <ComponentSource name="loading-swap"/>
+  </Tab>
+</Tabs>
+
+## Installation
+
+### CLI
+
+```npm
+npx shadcn@latest add https://dr-hooks.vercel.app/r/loading-swap.json
+```
+
+### Manual
+
+<Steps>
+  <Step>
+    <strong>Install the following dependencies</strong>
+    ```npm
+    npm install lucide-react
+    ```
+  </Step>
+
+  <Step>
+    <strong>Copy and paste the component</strong>
+    <ComponentSource name="loading-swap" />
+  </Step>
+
+  <Step>
+    <strong>Update your app imports</strong>
+    ```tsx
+    import { LoadingSwap } from "@/components/ui/loading-swap"
+    ```
+  </Step>
+</Steps>
+
+## Overview
+
+The LoadingSwap component provides a clean and intuitive way to handle loading states in your UI. It smoothly transitions between your content and a loading spinner while maintaining layout stability, making it perfect for buttons, forms, or any interactive elements that involve asynchronous operations.
+
+### Key Features
+
+- **Smooth Transitions**: Seamlessly swaps between content and loading states
+- **Layout Stability**: Maintains component dimensions during state changes
+- **Animated Spinner**: Built-in spinning animation using Lucide Icons
+- **Customizable**: Flexible styling through className prop
+- **Type-Safe**: Full TypeScript support
+
+## Usage
+
+### Basic Usage
+
+The most common use case is within buttons for async operations:
+
+```tsx
+<LoadingSwap isLoading={isLoading}>
+  Click Me
+</LoadingSwap>
+```
+
+### Common Patterns
+
+<Steps>
+  <Step>
+    <strong>Within a Button</strong>
+
+    Perfect for handling async button actions.
+
+    ```tsx
+    function AsyncButton() {
+      const [isLoading, startTransition] = useTransition()
+      
+      return (
+        <Button
+          onClick={() => {
+            startTransition(async () => {
+              await someAsyncOperation()
+            })
+          }}
+        >
+          <LoadingSwap isLoading={isLoading}>
+            Save Changes
+          </LoadingSwap>
+        </Button>
+      )
+    }
+    ```
+  </Step>
+
+  <Step>
+    <strong>Custom Loading Indicator</strong>
+
+    Customize the wrapper and loading states with className.
+
+    ```tsx
+    <LoadingSwap 
+      isLoading={isLoading}
+      className="text-blue-500"
+    >
+      Content
+    </LoadingSwap>
+    ```
+  </Step>
+
+  <Step>
+    <strong>Form Submit Button</strong>
+
+    Handle form submission states elegantly.
+
+    ```tsx
+    function SubmitButton({ isSubmitting }) {
+      return (
+        <Button type="submit">
+          <LoadingSwap isLoading={isSubmitting}>
+            Submit Form
+          </LoadingSwap>
+        </Button>
+      )
+    }
+    ```
+  </Step>
+</Steps>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `isLoading` | `boolean` | Required | Controls the visibility of content vs loading spinner |
+| `children` | `ReactNode` | Required | The content to display when not loading |
+| `className` | `string` | `undefined` | Additional CSS classes for styling |
+
+## Examples
+
+### Example 1: Simple Loading Button
+
+Basic implementation with React useTransition.
+
+```tsx
+"use client"
+
+import { useTransition } from "react"
+
+function LoadingButton() {
+  const [isLoading, startTransition] = useTransition()
+
+  return (
+    <Button
+      onClick={() => {
+        startTransition(async () => {
+          await someAsyncOperation()
+        })
+      }}
+    >
+      <LoadingSwap isLoading={isLoading}>
+        Click Me
+      </LoadingSwap>
+    </Button>
+  )
+}
+```
+
+### Example 2: Form Submit Button
+
+Using with form submission state.
+
+```tsx
+function SubmitForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    try {
+      await submitForm()
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+      <Button type="submit">
+        <LoadingSwap isLoading={isSubmitting}>
+          Submit
+        </LoadingSwap>
+      </Button>
+    </form>
+  )
+}
+```
+
+## Key Concepts
+
+### Grid-based Layout
+
+The component uses CSS Grid to maintain layout stability:
+- Content and spinner occupy the same grid cell
+- Visibility is toggled instead of unmounting
+- Prevents layout shifts during state changes
+
+### Animation Implementation
+
+The loading spinner uses:
+- Lucide's `Loader2Icon` component
+- CSS `animate-spin` class for smooth rotation
+- Invisible/visible states for clean transitions
+
+## Best Practices
+
+<Callout>
+  Follow these guidelines to ensure optimal implementation of LoadingSwap.
+</Callout>
+
+<Steps>
+  <Step>
+    <strong>Maintain Layout Consistency</strong>
+    <p>Ensure content has consistent width to prevent layout shifts when switching states.</p>
+  </Step>
+
+  <Step>
+    <strong>Handle Edge Cases</strong>
+    <p>Consider error states and timeout scenarios in your loading logic.</p>
+  </Step>
+
+  <Step>
+    <strong>Use with Loading States</strong>
+    <p>Combine with React's useTransition or loading states for optimal user experience.</p>
+  </Step>
+</Steps>
+
+## Accessibility
+
+The LoadingSwap component follows accessibility best practices:
+
+- **Visual Feedback**: Clear loading indication through animation
+- **Layout Stability**: Prevents disruptive layout shifts
+- **State Communication**: Clear visual indication of loading states
+
+## Technical Details
+
+<Callout>
+  Built with performance and flexibility in mind.
+</Callout>
+
+- Uses CSS Grid for layout management
+- Implements CSS visibility for smooth transitions
+- Leverages Lucide React for the loading icon
+- Optimized for React's concurrent features
+

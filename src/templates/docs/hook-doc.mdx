@@ -1,0 +1,336 @@
+---
+title: "[hookName]"
+description: "A concise description of what the hook does, its primary purpose, and key features like SSR safety or automatic handling."
+---
+
+## Installation
+
+<Tabs items={["CLI","Manual"]} className="pt-5 bg-transparent">
+  <Tab>
+    ```
+    npx shadcn@latest add https://dr-hooks.vercel.app/r/hook-name.json
+    ```
+  </Tab>
+
+  <Tab>
+    <ComponentSource name="hook-name" />
+  </Tab>
+</Tabs>
+
+### Dependencies
+
+[List all dependencies clearly]
+
+This hook requires:
+- `package-name` version X.X.X or higher
+
+*Or if no dependencies:*
+
+This hook has **no external dependencies** and only uses built-in React APIs.
+
+---
+
+## Overview
+
+[2-4 sentences explaining what the hook does, what problem it solves, and how it improves the developer experience]
+
+### What It Does
+
+[Detailed paragraph explaining the core functionality and how it works at a high level]
+
+### When to Use It
+
+This hook is ideal for:
+
+- **Use Case 1**: Detailed explanation with context
+- **Use Case 2**: Detailed explanation with context  
+- **Use Case 3**: Detailed explanation with context
+- **Use Case 4**: Detailed explanation with context
+
+<Callout type="warning">
+  **Security Note**: [If applicable, warn about sensitive data, localStorage limitations, etc.]
+</Callout>
+
+---
+
+## Usage
+
+### Basic Example
+
+[Explain the simplest usage scenario with context]
+
+```
+import { hookName } from "@/hooks/hook-name";
+
+function Component() {
+  // 1. Initialize the hook
+  const [value, setValue] = hookName("key", "defaultValue");
+
+  // 2. Use the returned values
+  const handleAction = () => {
+    setValue("newValue");
+  };
+
+  return (
+    <div>
+      <p>Current value: {value}</p>
+      <button onClick={handleAction}>Update</button>
+    </div>
+  );
+}
+```
+
+### Advanced Example
+
+[Show more complex usage]
+
+```
+import { hookName } from "@/hooks/hook-name";
+
+type CustomType = {
+  field1: string;
+  field2: number;
+};
+
+function AdvancedComponent() {
+  const [data, setData] = hookName<CustomType>("complex-key", {
+    field1: "default",
+    field2: 0
+  });
+
+  const updateField = (field: keyof CustomType, value: any) => {
+    setData(prev => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    // Implementation
+  );
+}
+```
+
+---
+
+## API Reference
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `param1` | `string` | Yes | **Required.** Detailed explanation of what this parameter does, expected values, and any constraints |
+| `param2` | `T` | Yes | **Required.** Detailed explanation with type information |
+| `param3` | `boolean` | No | **Optional.** Detailed explanation with default behavior |
+
+### Return Values
+
+The hook returns [explain the return type structure, e.g., "a state-like tuple", "an object with methods", etc.]
+
+| Value | Type | Description |
+|-------|------|-------------|
+| `returnValue1` | `T` | Detailed explanation of what this value represents and when it updates |
+| `returnValue2` | `(value: T) => void` | Detailed explanation of what this function does and how to use it |
+
+---
+
+## Key Concepts
+
+### 1. Concept Name
+
+[Detailed explanation of the first important concept users need to understand. Include why it matters and how it affects usage.]
+
+**Example:**
+
+```
+// Demonstrate the concept with code
+const example = hookName("key", "value");
+```
+
+### 2. Concept Name
+
+[Detailed explanation of the second concept]
+
+**Why It Matters:**
+
+[Explain the practical implications]
+
+### 3. Concept Name
+
+[Detailed explanation of additional concepts]
+
+**Technical Details:**
+
+[Provide deeper technical context for advanced users]
+
+---
+
+## Common Patterns
+
+### Pattern 1: [Pattern Name]
+
+[Explain when and why to use this pattern]
+
+```
+// Implementation example
+```
+
+**When to use**: [Specific scenarios]
+
+### Pattern 2: [Pattern Name]
+
+[Explain when and why to use this pattern]
+
+```
+// Implementation example
+```
+
+**Benefits**: [List the advantages]
+
+---
+
+## Best Practices
+
+<Callout>
+  [Introduction to best practices and why they matter]
+</Callout>
+
+### Do's
+
+- ✅ **Practice 1**: Detailed explanation of what to do
+- ✅ **Practice 2**: Detailed explanation with reasoning
+- ✅ **Practice 3**: Detailed explanation with examples
+
+### Don'ts  
+
+- ❌ **Anti-pattern 1**: Explain what to avoid and why
+- ❌ **Anti-pattern 2**: Explain what to avoid with alternatives
+- ❌ **Anti-pattern 3**: Explain common mistakes
+
+---
+
+## Troubleshooting
+
+### Issue 1: [Common Problem]
+
+**Symptoms**: [Describe what users will see]
+
+**Cause**: [Explain why it happens]
+
+**Solution**: 
+
+```
+// Show the fix
+```
+
+### Issue 2: [Common Problem]
+
+**Symptoms**: [Describe what users will see]
+
+**Solution**: [Provide the fix with explanation]
+
+---
+
+## Advanced Usage
+
+### Advanced Feature 1
+
+[Explain advanced capabilities for power users]
+
+```
+// Complex implementation example
+```
+
+### Advanced Feature 2
+
+[Explain another advanced feature]
+
+---
+
+## TypeScript Support
+
+[If applicable, explain TypeScript-specific features]
+
+### Type Definitions
+
+```
+// Show the type signature
+type HookReturnType<T> = [T, (value: T) => void];
+```
+
+### Generic Usage
+
+```
+// Show how to use with TypeScript generics
+const [value, setValue] = hookName<CustomType>("key", defaultValue);
+```
+
+---
+
+## Performance Considerations
+
+[Explain any performance implications]
+
+- **Optimization 1**: [Describe what the hook does to optimize performance]
+- **Optimization 2**: [Describe another optimization]
+- **When to be careful**: [Explain potential performance pitfalls]
+
+---
+
+## Browser Compatibility
+
+[If applicable, list browser support and limitations]
+
+- ✅ Chrome XX+
+- ✅ Firefox XX+
+- ✅ Safari XX+
+- ⚠️ [Any limitations or polyfills needed]
+
+---
+
+## Related Hooks
+
+- **[HookName1]**: [Brief explanation of when to use this instead]
+- **[HookName2]**: [Brief explanation of how it complements this hook]
+
+
+
+
+## **Template Features**
+
+This template structure provides:[2][3]
+
+### **Clear Information Hierarchy**
+- Starts with installation (immediate need)
+- Moves to overview and basic usage (learning)
+- Progresses to API reference (detailed specs)
+- Ends with advanced topics (mastery)
+
+### **Comprehensive Coverage**
+- **Installation**: Both CLI and manual methods
+- **Overview**: Problem statement and value proposition
+- **Usage**: From basic to advanced examples
+- **API Reference**: Complete parameter and return value documentation
+- **Key Concepts**: Deep dives into important topics
+- **Best Practices**: Guidance on proper usage
+- **Troubleshooting**: Common issues and solutions
+- **Advanced Usage**: Power user features
+
+### **Developer-Friendly**
+- Code examples with descriptive titles
+- Inline comments highlighting key points
+- Visual callouts for warnings and important notes
+- Clear do's and don'ts
+- TypeScript support examples
+
+### **Flexible Sections**
+You can omit sections that don't apply to your specific component/hook:
+- Remove "Common Pitfalls" if there aren't any
+- Skip "Performance Considerations" for simple hooks
+- Omit "Related Components/Hooks" if standalone
+- Remove "Browser Compatibility" if not relevant
+
+### **Consistent Formatting**
+- Uses markdown tables for structured data
+- Code blocks with language and title annotations
+- Callouts for important information
+- Steps for sequential processes
+- Tabs for alternative views
+
