@@ -1,11 +1,37 @@
 ---
 title: Introduction
-description: Get started with dRhooks, a curated collection of components designed to extend shadcn/ui.
+description: Welcome to dRhooks - A powerful collection of React hooks and UI components extending shadcn/ui.
 ---
 
-Welcome to dRhooks! This is a personal collection of beautifully designed and reusable UI components created to supercharge your projects built with [shadcn/ui](https://ui.shadcn.com/). 
+import { Callout } from 'fumadocs-ui/components/callout'
+import { Steps } from 'fumadocs-ui/components/steps'
+import { Card, Cards } from 'fumadocs-ui/components/card'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 
-This registry extends the core `shadcn/ui` library with many useful and unique components to help you build stunning user interfaces even faster. 
+<Callout type="info">
+  dRhooks is actively maintained and regularly updated with new components and hooks. Star us on [GitHub](https://github.com/AbirpandA/dRhooks) to stay updated!
+</Callout>
+
+# Welcome to dRhooks
+
+dRhooks is a carefully curated collection of beautiful UI components and powerful React hooks built on top of [shadcn/ui](https://ui.shadcn.com/). Our components and hooks are designed to accelerate your development workflow while maintaining the highest standards of accessibility and performance.
+
+## Features
+
+<Cards>
+  <Card title=" Beautiful Components" href="/docs/components/loading-swap">
+    Extend shadcn/ui with stunning, ready-to-use components that seamlessly integrate into your projects.
+  </Card>
+  <Card title=" Custom Hooks" href="/docs/hooks/use-debounce">
+    Production-ready React hooks that solve common development challenges.
+  </Card>
+  <Card title=" Zero Bundle Size" href="/docs/components/loading-swap">
+    Copy and paste only what you need - no extra dependencies.
+  </Card>
+  <Card title=" Accessibility First" href="/docs/components/loading-swap">
+    Built on Radix UI primitives with WCAG compliance in mind.
+  </Card>
+</Cards>
 
 ## Core Philosophy
 
@@ -15,22 +41,74 @@ This project follows the same principles that make `shadcn/ui` great:
 * **Just Copy & Paste:** This is not an installable library. Simply find a component you like, copy its code directly into your project, and customize it to fit your needs. The code is yours. 
 * **Open & Free:** All components are free to use for both personal and commercial projects, just like `shadcn/ui`.
 
+
 ## Getting Started
 
-Adding a component to your project is simple.
+<Steps>
+### Install Prerequisites
+First, ensure you have shadcn/ui installed and configured in your project:
 
-### 1. Prerequisite: Install shadcn/ui
+```npm
+npx shadcn-ui@latest init
+```
 
-Before you begin, you must have `shadcn/ui` installed and configured in your project.  If you haven't, please follow the official [installation guide](https://ui.shadcn.com/docs/installation) first. 
+### Choose Components
+Browse our component library and select the ones you need for your project.
 
-### 2. Add a Component
+### Copy & Paste
+Copy the component code and paste it into your project's components directory.
 
-Browse the component library, copy the source code of your chosen component, and paste it into a new file within your project's `components` directory. That's it!
+### Start Using
+Import and use the component in your application. Customize it to match your needs.
+</Steps>
 
-## References
+## Quick Example
 
-This project would not be possible without these incredible open-source tools:
+```tsx
+import { BounceButton } from '@/components/ui/bounce-button'
 
--   [shadcn/ui](https://ui.shadcn.com/) - For style and registry distribution.
--   [Tailwind CSS](https://tailwindcss.com) - For easily styling with utility-first CSS. 
--   [Radix UI](https://radix-ui.com/) - For composition and accessibility utilities. 
+export default function Page() {
+  return (
+    <BounceButton>
+      Click me!
+    </BounceButton>
+  )
+}
+```
+
+<Callout type="warning">
+  Make sure to install any peer dependencies required by the components you're using. Each component's documentation lists its required dependencies.
+</Callout>
+
+## Tech Stack
+
+Our components are built with:
+
+<Cards>
+  <Card title="TypeScript" href="https://www.typescriptlang.org/">
+    Full type safety and excellent developer experience
+  </Card>
+  <Card title="React" href="https://react.dev">
+    The library for web and native user interfaces
+  </Card>
+  <Card title="Tailwind CSS" href="https://tailwindcss.com">
+    A utility-first CSS framework
+  </Card>
+  <Card title="Radix UI" href="https://www.radix-ui.com">
+    Unstyled, accessible components
+  </Card>
+</Cards>
+
+## Community and Support
+
+<Callout type="info">
+  Have questions or need help? Join our [Discord community](https://discord.gg/your-discord) or open an issue on [GitHub](https://github.com/AbirpandA/dRhooks/issues).
+</Callout>
+
+## Credits
+
+This project builds upon these amazing tools:
+
+- [shadcn/ui](https://ui.shadcn.com/) - For the component architecture and distribution model
+- [Tailwind CSS](https://tailwindcss.com) - For the utility-first styling approach
+- [Radix UI](https://radix-ui.com/) - For accessible component primitives

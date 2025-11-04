@@ -1,55 +1,141 @@
-# dRhooks - A Component Registry for shadcn/ui
+# dRhooks 🎨
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.0-blue)](https://reactjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.3-black)](https://nextjs.org/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn/ui-latest-purple)](https://ui.shadcn.com/)
 
-Welcome to dRhooks! [cite_start]This is a personal collection of reusable and beautifully-designed UI components built to extend the amazing [shadcn/ui](https://ui.shadcn.com/) library. [cite: 1, 5]
+A curated collection of high-quality React hooks and beautifully-designed UI components built on top of [shadcn/ui](https://ui.shadcn.com/). Built with TypeScript, React, and Tailwind CSS to supercharge your development workflow.
 
-[cite_start]The components are built on top of Radix UI primitives and styled with Tailwind CSS, designed to accelerate your development workflow. [cite: 2]
+## ✨ Features
 
-
-## 🤔 What is this?
-
-This repository is not an NPM package. It's a **component registry**. Think of it as an unofficial extension to the `shadcn/ui` catalog. It contains a variety of useful components that you can easily add to your projects.
-
-The core philosophy is the same as `shadcn/ui`:
-* [cite_start]**You own the code:** Components are meant to be copied and pasted directly into your project. [cite: 7] This gives you full control over styling, behavior, and functionality.
-* **Built for customization:** Easily adapt the components to match your application's design system.
-* [cite_start]**Free to use:** All components are free for personal and commercial use. [cite: 6]
+- 🎨 **Beautiful Components**: Extending shadcn/ui with new, carefully crafted components
+- 🎣 **Custom Hooks**: Collection of production-ready React hooks
+- 📦 **Zero-Install Usage**: Copy and paste what you need
+- 🎯 **TypeScript First**: Full type safety and autocompletion
+- 🎭 **Fully Customizable**: Adapt components to match your brand
+- ⚡ **Performance Focused**: Optimized for speed and efficiency
+- 📱 **Responsive Design**: Works seamlessly across all devices
+- ♿ **Accessible**: Following WCAG guidelines and best practices
 
 ## 🚀 Getting Started
 
-Using components from this registry is straightforward.
-
 ### Prerequisites
 
-[cite_start]You must have **`shadcn/ui` installed and configured** in your project. [cite: 8] [cite_start]If you haven't done this yet, please follow the official [installation guide](https://ui.shadcn.com/docs/installation). [cite: 9]
+- Node.js 18+
+- React 19+
+- Next.js 15+
+- shadcn/ui (follow their [installation guide](https://ui.shadcn.com/docs/installation))
+- Tailwind CSS
 
-### How to Add a Component
+### Installation
 
-1.  **Browse the Components**: Navigate to the [`components/registry/default`](https://github.com/AbirpandA/dRhooks/tree/main/components/registry/default) directory to see all available components.
-2.  **Copy the Code**: Open the folder for the component you want (e.g., `shiny-button`) and copy the contents of the `.tsx` file.
-3.  **Paste into Your Project**: Create a new file in your project's `components/ui` directory (e.g., `shiny-button.tsx`) and paste the code.
-4.  **Install Dependencies**: Check the component file for any new dependencies and install them if necessary.
-5.  **Use It**: Import the component into your application and start using it!
+1. **Set up shadcn/ui**
 
-## ✨ Available Components
+   ```bash
+   npx shadcn-ui init
+   ```
 
-This registry includes a growing list of components, such as:
+2. **Configure Your Project**
+   - Ensure your project has Tailwind CSS configured
+   - Add the required dependencies from the component you want to use
 
-* Bento Grid
-* Dock
-* Evervault Card
-* Globe
-* Infinite Moving Cards
-* Retro Grid
-* Shiny Button
-* Word Pull-Up
-* ...and more!
+## 📦 Available Components
+
+### UI Components
+
+- 🎨 **Interactive Elements**
+  - `<BounceButton />` - Interactive button with bounce animation
+  - `<LoadingSwap />` - Smooth loading state transitions
+  - `<ShimmerText />` - Text with attractive shimmer effect
+
+### Custom Hooks
+
+- ⚡ **Performance Hooks**
+  - `useDebounce` - Debounce your function calls
+  - `useFetch` - Fetch data with built-in states
+  - `useLocalStorage` - Persist state in localStorage
+
+## 📖 Usage Example
+
+```tsx
+import { BounceButton } from "./components/ui/bounce-button";
+
+function App() {
+  return <BounceButton>Click me!</BounceButton>;
+}
+```
+
+## 🛠️ Component Integration
+
+1. **Choose a Component**
+
+   - Browse the components in the `src/registry/new-york` directory
+   - Check the component's documentation in `src/content/docs`
+
+2. **Copy the Code**
+
+   - Copy the component code from the respective file
+   - Paste it into your project's components directory
+
+3. **Install Dependencies**
+
+   - Check the component's dependencies in its documentation
+   - Install any required packages
+
+4. **Use the Component**
+   - Import and use the component in your application
+   - Customize as needed using the provided props and styles
+
+## 🧪 Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Build registry
+pnpm build:registry
+
+# Build documentation
+pnpm build:docs
+```
+
+## 📚 Documentation
+
+Visit our documentation site for:
+
+- Detailed API references
+- Live examples
+- Best practices
+- Customization guides
+- Performance tips
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our contributing guidelines before submitting a PR.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgements
 
+- [shadcn/ui](https://ui.shadcn.com/) for the amazing component foundation
+- [Radix UI](https://www.radix-ui.com/) for accessible primitives
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
+
 This project stands on the shoulders of giants. Full credit goes to the creators of these incredible tools:
 
-* [**shadcn/ui**](https://ui.shadcn.com/): For the component architecture, style, and distribution method.
-* [cite_start][**Radix UI**](https://radix-ui.com/): For providing accessible and composable low-level UI primitives. [cite: 10]
-* [cite_start][**Tailwind CSS**](https://tailwindcss.com): For the utility-first CSS framework that makes styling a breeze. [cite: 10]
+- [**shadcn/ui**](https://ui.shadcn.com/): For the component architecture, style, and distribution method.
+- [cite_start][**Radix UI**](https://radix-ui.com/): For providing accessible and composable low-level UI primitives. [cite: 10]
+- [cite_start][**Tailwind CSS**](https://tailwindcss.com): For the utility-first CSS framework that makes styling a breeze. [cite: 10]
