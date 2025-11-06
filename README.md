@@ -100,6 +100,36 @@ pnpm dev
 # Build registry
 pnpm build:registry
 
+# Build for production
+pnpm build
+```
+
+## 🐳 Docker Support
+
+### Development with Docker
+
+For contributors working on the documentation site or developing new components, you can use Docker to ensure a consistent development environment:
+
+```bash
+# Start the development server
+docker-compose up
+
+# Stop the development server
+docker-compose down
+```
+
+### Why Docker?
+
+- 🔄 **Consistent Development**: Same setup for all contributors
+- 🔒 **Isolated Environment**: Clean testing environment for components
+- � **Easy Contribution**: Quick setup for new contributors
+- � **Documentation Testing**: Reliable environment for docs site
+
+The Docker setup is optional - you can still use the regular Node.js development workflow if preferred. Most users who are just using the components and hooks in their own projects don't need to use Docker.
+
+```
+pnpm build:registry
+
 # Build documentation
 pnpm build:docs
 ```
