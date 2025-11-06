@@ -49,6 +49,7 @@ npx shadcn@latest add https://dr-hooks.vercel.app/r/shimmer-text.json
 
 The `ShimmerText` component adds an animated shimmer effect to text content, creating an engaging visual experience. This effect is commonly used for loading states, highlighting important text, or adding visual interest to headings and content.
 
+
 ## Examples
 
 <Steps>
@@ -71,17 +72,40 @@ The `ShimmerText` component adds an animated shimmer effect to text content, cre
   </Step>
 
   <Step>
-    <strong>Custom Color and Reverse Direction</strong>
+    <strong>Custom Color (CSS or Tailwind)</strong>
+
+    <p>You can set <code>--shimmer-color</code> on the component itself or any parent element. Two common approaches:</p>
+
+    <em>Tailwind (arbitrary property)</em>
 
     ```tsx
-    <ShimmerText
-      shimmerColor="#FFD700"
-      reverse={true}
-      className="text-2xl font-bold"
-    >
+    <ShimmerText className="[--shimmer-color:theme(colors.amber.400)] text-2xl font-bold">
       Golden Shimmer
     </ShimmerText>
     ```
+
+    <em>Plain CSS class</em>
+
+    ```css
+    /* styles.css */
+    .gold-shimmer { --shimmer-color: #FFD700; }
+    ```
+
+    ```tsx
+    <ShimmerText className="gold-shimmer text-2xl font-bold">
+      Golden Shimmer
+    </ShimmerText>
+    ```
+
+    <em>Or set it inline on a parent:</em>
+
+    ```tsx
+    <div style={{ ['--shimmer-color' as any]: '#0ea5e9' }}>
+      <ShimmerText>Blue shimmer via parent</ShimmerText>
+    </div>
+    ```
+
+    The component provides sensible light/dark defaults, but you can override them anywhere using the `--shimmer-color` custom property.
   </Step>
 
 </Steps>
@@ -95,7 +119,6 @@ The `ShimmerText` component adds an animated shimmer effect to text content, cre
 | `children` | `React.ReactNode` | Required | The text content to display with the shimmer effect |
 | `className` | `string` | `undefined` | Additional CSS classes to apply to the text |
 | `duration` | `number` | `2` | Duration of the shimmer animation in seconds |
-| `shimmerColor` | `string` | `"#ffffff"` | Color of the shimmer effect |
 | `shimmerWidth` | `number` | `10` | Width of the shimmer effect in percentage |
 | `reverse` | `boolean` | `false` | Whether to reverse the animation direction |
 
@@ -114,7 +137,7 @@ The `ShimmerText` component adds an animated shimmer effect to text content, cre
 
   <Step>
     <strong>Flexible Styling</strong>
-    <p>Apply custom styles through <code>className</code> and integrate with your design system.</p>
+    <p>Apply custom styles through <code>className</code>, CSS custom properties, or Tailwind arbitrary properties. The shimmer color is controlled via the CSS variable <code>--shimmer-color</code>.</p>
   </Step>
 
   <Step>
