@@ -8,13 +8,12 @@ interface ShimmerTextProps{
   children:React.ReactNode,
   className?:string,
   duration?: number,
-  shimmerColor?:string,
   shimmerWidth?:number,
   reverse?:boolean
 }
 
 
-export function ShimmerText({children,className,duration=2,shimmerColor="#ffffff",shimmerWidth = 10,reverse=false}:ShimmerTextProps){
+export function ShimmerText({children,className,duration=2,shimmerWidth = 10,reverse=false}:ShimmerTextProps){
 
   const validatedShimmerWidth = Math.max(0, Math.min(shimmerWidth, 80));
   const halfWidth = validatedShimmerWidth / 2
@@ -30,8 +29,8 @@ export function ShimmerText({children,className,duration=2,shimmerColor="#ffffff
     backgroundImage: `linear-gradient(
       110deg,
       transparent ${startPercent -10}%, 
-      ${shimmerColor} ${startPercent}%,
-      ${shimmerColor} ${endPercent}%,
+      var(--shimmer-color) ${startPercent}%,
+      var(--shimmer-color) ${endPercent}%,
       transparent ${endPercent +10}%
     )`,
     backgroundSize: "250% 100%",
@@ -49,7 +48,7 @@ export function ShimmerText({children,className,duration=2,shimmerColor="#ffffff
 
   style={shimmerStyle}
 
-  className={cn(`bg-clip-text text-gray-200/20 `,className)}
+  className={cn(`bg-clip-text text-gray-800/20`,`dark:text-gray-200/20`,`dark:[--shimmer-color:theme(colors.white)]`,`[--shimmer-color:theme(colors.slate.900)]`,className)}
   >
    {children}
 
