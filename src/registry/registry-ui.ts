@@ -35,4 +35,18 @@ export const ui: Registry['items'] = [
         }
       ]
     },
+    {
+      "name": "prompt-input",
+      "description": " A versatile input component for chat prompts with file attachment support.",
+      "type": "registry:component",
+      "dependencies": [ "lucide-react" ],
+      registryDependencies: ["https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/loading-swap.json"],
+      "files": [
+        {
+          "path": "new-york/ui/prompt-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    
 ];

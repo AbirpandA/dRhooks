@@ -1,0 +1,344 @@
+---
+title: "Prompt Input"
+description: "A flexible textarea component for submitting prompts, with support for file attachments and loading states."
+---
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab>
+    <ComponentPreview name="prompt-input-demo"/>
+  </Tab>
+  <Tab>
+    <ComponentSource name="prompt-input"/>
+  </Tab>
+</Tabs>
+
+## Installation
+
+### CLI
+
+``` npm
+npx shadcn@latest add https://dr-hooks.vercel.app/r/prompt-input.json
+````
+
+### Manual
+
+<Steps>
+  <Step>
+    <strong>Install the following dependencies</strong>
+
+    This component uses `lucide-react` for icons and a custom [`LoadingSwap`](/docs/components/loading_swap) component. Ensure you have them installed and available.
+
+    ```npm
+    npm install lucide-react
+    ```
+    
+  </Step>
+
+  <Step>
+    <strong>Copy and paste the component</strong>
+
+    Copy the code for `prompt-input.tsx` (and `loading-swap.tsx` if you don't have it) into your project.
+
+    <ComponentSource name="prompt-input" />
+  </Step>
+
+  <Step>
+    <strong>Update your app imports</strong>
+
+    Update the import paths to match your project's file structure.
+
+    ```tsx
+    import { PromptInput } from "@/components/ui/prompt-input"
+    import { LoadingSwap } from "@/components/ui/loading-swap"
+    import { cn } from "@/lib/utils"
+    ```
+  </Step>
+</Steps>
+
+## Overview
+
+The `PromptInput` component provides a rich interface for user input, similar to those found in modern AI chat applications. It's designed to handle text submission, optional file attachments, loading states, and error handling, all within a single, self-contained unit. Use it whenever you need to capture complex user prompts that may include both text and files.
+
+### Key Features
+
+- **Async Submission**: Natively handles `async` `onsubmit` functions, showing a loading state.
+- **File Attachments**: Optionally allow users to attach files with type filtering and count limits.
+- **File Previews**: Displays a list of attached files with an option to remove them.
+- **Auto-Resizing**: The textarea automatically grows and shrinks based on the user's input.
+- **Loading & Disabled States**: Built-in support for `loading` (external) and `submitting` (internal) states.
+- **Keyboard Shortcuts**: `Enter` submits the form, while `Shift+Enter` adds a new line.
+- **Character Counter**: Automatically displays a character count when `maxLength` is set.
+
+## Usage
+
+### Basic Usage
+
+The component is controlled by providing a `loading` prop and an `onsubmit` handler.
+
+```tsx
+import { PromptInput } from "@/components/ui/prompt-input";
+import React from "react";
+
+function MyComponent() {
+  const [loading, setLoading] = React.useState(false);
+
+  async function handleSubmit(value: string) {
+    setLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log("Submitted:", value);
+    setLoading(false);
+  }
+
+  return (
+    <PromptInput
+      onsubmit={handleSubmit}
+      loading={loading}
+      placeholder="Type your prompt..."
+    />
+  );
+}
+````
+
+### Common Patterns
+
+<Steps>
+<Step>
+<strong>With File Attachments</strong>
+
+
+Enable file attachments by setting `allowFiles={true}`. The `onsubmit` handler will receive an array of `File` objects as its second argument.
+
+```tsx
+<PromptInput
+  onsubmit={handleSubmit}
+  loading={loading}
+  allowFiles={true}
+  acceptedTypes="image/png, image/jpeg"
+  maxfiles={2}
+  placeholder="Upload up to 2 images..."
+/>
+```
+
+
+</Step>
+
+<Step>
+<strong>With Character Limit</strong>
+
+
+Use the `maxLength` prop to enforce a character limit. A counter will be displayed.
+
+```tsx
+<PromptInput
+  onsubmit={handleSubmit}
+  loading={loading}
+  maxLength={500}
+  placeholder="Enter a prompt (max 500 characters)"
+/>
+```
+
+
+</Step>
+
+<Step>
+<strong>With Error Handling</strong>
+
+Pass an `onError` callback to handle any errors thrown from your `onsubmit` function. This is the ideal place to show toast notifications and reset loading states.
+
+```tsx
+function handleError(error: Error) {
+  console.error("Submission failed:", error);
+  // Show toast notification
+}
+
+<PromptInput
+  onsubmit={handleSubmit}
+  loading={loading}
+  onError={handleError}
+/>
+```
+
+
+</Step>
+</Steps>
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onsubmit` | `(value: string, files?: File[]) => Promise<void> \| void` | Required | Function called on submission. Receives the text value and an optional array of files if `allowFiles` is true. |
+| `loading` | `boolean` | Required | Controls the external loading state. Disables the input and shows a spinner on the submit button. |
+| `onchange` | `(value: string) => void` | `undefined` | Optional callback for when the textarea value changes. |
+| `onError` | `(error: Error) => void` | `undefined` | Optional callback for handling errors that occur during the `onsubmit` function. |
+| `allowFiles` | `boolean` | `false` | If true, enables the file attachment button and file previews. |
+| `acceptedTypes` | `string` | `'image/*,.pdf,.doc,.docx'` | The string passed to the file input's `accept` attribute. |
+| `maxfiles` | `number` | `4` | Maximum number of files that can be attached. |
+| `placeholder` | `string` | `"what do you wanna build"` | Placeholder text for the textarea. |
+| `disabled` | `boolean` | `false` | Disables the entire component, overriding other state. |
+| `maxLength` | `number` | `undefined` | Maximum character length. Displays a counter when set. |
+| `minLength` | `number` | `undefined` | Minimum character length required for submission. The submit button will be disabled if not met. |
+| `className` | `string` | `undefined` | Additional CSS classes for the root `form` element. |
+| `id` | `string` | `undefined` | HTML `id` for the textarea element. |
+| `aria-label` | `string` | `undefined` | ARIA label for the textarea. Defaults to the `placeholder` if not provided. |
+
+## Examples
+
+### Example 1: Full-Featured Chat Input
+
+This example shows a complete implementation with state, submission, file handling, and error handling.
+
+```tsx
+import React from "react";
+import { PromptInput } from "@/components/ui/prompt-input";
+
+export function PromptInputFullExample() {
+  const [loading, setLoading] = React.useState(false);
+
+  async function handleSubmit(value: string, files?: File[]) {
+    setLoading(true);
+    console.log("Submitting:", value, files);
+    
+    
+    return new Promise<void>((resolve, reject) => {
+      setTimeout(() => {
+        // Uncomment to test error state
+        // if (Math.random() > 0.5) {
+        //   reject(new Error("Failed to submit"));
+        // }
+        
+        console.log("Submitted successfully");
+        setLoading(false);
+        resolve();
+      }, 2000);
+    });
+  }
+
+  function handleError(error: Error) {
+    setLoading(false); 
+    console.error("Error during submission:", error);
+    // You could show a toast notification here
+  }
+
+  return (
+    <div className="max-w-md mx-auto p-4">
+      <PromptInput
+        onsubmit={handleSubmit}
+        onError={handleError}
+        allowFiles={true}
+        loading={loading}
+        placeholder="Type your prompt or attach files..."
+        className="w-full"
+      />
+    </div>
+  );
+}
+```
+
+## Key Concepts
+
+### Submission Handling
+
+Submission can be triggered by pressing `Enter` (without `Shift`) or clicking the submit button. The `onsubmit` prop can be an `async` function. The component will enter an internal `submitting` state to prevent concurrent submissions and will reset its value and files only *after* a successful submission.
+
+### Loading States
+
+The component has two loading states:
+
+1.  **`loading` (prop)**: This is for external processes. You should set this to `true` while you are waiting for a response (e.g., from an AI) *after* the prompt has been submitted.
+2.  **`submitting` (internal state)**: This is active *during* the execution of your `onsubmit` function.
+
+Both states will disable the input and show a loading indicator on the submit button.
+
+## Best Practices
+
+<Callout>
+Follow these guidelines to ensure the component works reliably in your application.
+</Callout>
+
+<Steps>
+<Step>
+<strong>Handle Loading State Reliably</strong>
+<p>Always use a `try...catch...finally` block or an `onError` prop to ensure your parent component's `loading` state is reset to `false`, even if the submission fails.</p>
+</Step>
+
+<Step>
+<strong>Implement the `onError` Prop</strong>
+<p>Provide an `onError` callback to catch and handle any errors thrown from your `onsubmit` function. This is the correct place to show toast notifications or error messages to the user.</p>
+</Step>
+
+<Step>
+<strong>Validate Files</strong>
+<p>The component validates file *count* and *type*. You should perform any *size* or *content* validation inside your `onsubmit` handler before sending files to your server.</p>
+</Step>
+</Steps>
+
+## Common Pitfalls
+
+### Pitfall 1: Loading State Stuck on `true`
+
+**Problem**: A user submits a prompt, the `onsubmit` function throws an error, but the parent's `loading` state is never reset to `false`. The input is now permanently disabled.
+
+**Solution**: Use the `onError` prop or a `finally` block in your submission handler to guarantee the loading state is reset.
+
+```tsx
+// [!code --]
+async function handleSubmit(value: string) {
+  // [!code --]
+  setLoading(true);
+  // [!code --]
+  await myApiCall(value); 
+  // [!code --]
+  setLoading(false);
+  // [!code --]
+}
+
+// [!code ++]
+async function handleSubmit(value: string) {
+  // [!code ++]
+  setLoading(true);
+  // [!code ++]
+  await myApiCall(value);
+  // [!code ++]
+  setLoading(false); 
+  // [!code ++]
+}
+
+function handleError(error: Error) {
+  setLoading(false); 
+  console.error(error);
+}
+
+// ...
+<PromptInput onsubmit={handleSubmit} onError={handleError} ... />
+```
+
+## Accessibility
+
+The component is designed with accessibility in mind.
+
+  - **Keyboard Navigation**:
+      - `Enter`: Submits the form.
+      - `Shift + Enter`: Adds a new line in the textarea.
+      - `Tab`: Navigates between the textarea, file preview "remove" buttons, file attach button, and submit button.
+  - **Screen Readers**: The main textarea uses `aria-label` (defaulting to the `placeholder`) for context. File attachment and removal buttons have appropriate ARIA labels.
+  - **ARIA Attributes**: `disabled` and `aria-label` attributes are applied based on component state and props.
+
+## Technical Details
+
+<Callout>
+This component is self-contained but relies on a few common dependencies.
+</Callout>
+
+  - Built with React (using hooks) and TypeScript.
+  - Uses `lucide-react` for icons (`ArrowUp`, `Paperclip`, `X`).
+  - Relies on your custom `LoadingSwap` component for the submit button's loading state.
+  - Uses a `cn` utility (like in `shadcn/ui`) for merging Tailwind CSS classes.
+  - The textarea's auto-resize is handled by a `React.useEffect` hook.
+
+## Related Components
+
+  - **`LoadingSwap`**: Used internally for the submit button's loading animation.
+  - **`Textarea`**: If you need a simple, auto-resizing textarea without the form, file, or submission logic.
+
