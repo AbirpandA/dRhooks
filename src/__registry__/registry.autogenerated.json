@@ -40,6 +40,23 @@
       ]
     },
     {
+      "name": "prompt-input",
+      "type": "registry:component",
+      "description": " A versatile input component for chat prompts with file attachment support.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/loading-swap.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/prompt-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "use-debounce",
       "type": "registry:component",
       "description": "A small hook to debounce a value.",

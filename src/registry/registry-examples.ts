@@ -40,4 +40,17 @@ export const examples: Registry['items'] = [
     ],
     registryDependencies: ['https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/shimmer-text.json'],
   },
+  {
+    name: 'prompt-input-demo',
+    type: 'registry:example',
+    title: 'prompt input',
+    description: 'A versatile input component for chat prompts with file attachment support.',
+    files: [
+      {
+        path: 'new-york/examples/prompt-input-example.tsx',
+        type: 'registry:example',
+      },
+    ],
+    registryDependencies: ['https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/prompt-input.json'],
+  },
 ];
