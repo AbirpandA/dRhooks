@@ -26,7 +26,7 @@ export function PromptInput({
   onError,
   loading,
   allowFiles = false,
-  acceptedTypes = 'image/*,.pdf,.doc,.docx',
+  acceptedTypes = "image/*,.pdf,.doc,.docx",
   maxfiles = 4,
   placeholder = "what do you wanna build",
   className,
@@ -74,9 +74,11 @@ export function PromptInput({
       }
       setFiles([]);
       setValue("");
-      
     } catch (error) {
-      const err = error instanceof Error ? error : new Error("Error submitting the request");
+      const err =
+        error instanceof Error
+          ? error
+          : new Error("Error submitting the request");
       if (onError) {
         onError(err);
       } else {
@@ -98,7 +100,7 @@ export function PromptInput({
     if (allowFiles && e.target.files) {
       const selectedFiles = Array.from(e.target.files).slice(0, maxfiles);
       setFiles((prev) => [...prev, ...selectedFiles].slice(0, maxfiles));
-      
+
       // Reset input to allow same file selection
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -112,7 +114,13 @@ export function PromptInput({
 
   const canSubmit = React.useMemo(() => {
     const hasMinLength = minLength ? value.trim().length >= minLength : true;
-    return value.trim().length > 0 && hasMinLength && !submitting && !loading && !disabled;
+    return (
+      value.trim().length > 0 &&
+      hasMinLength &&
+      !submitting &&
+      !loading &&
+      !disabled
+    );
   }, [value, submitting, loading, disabled, minLength]);
 
   const isDisabled = disabled || loading || submitting;
@@ -121,9 +129,10 @@ export function PromptInput({
     <form
       className={cn(
         "relative  rounded-xl shadow-lg p-2  border  w-100",
-         'dark: bg-gradient-to-bl from-zinc-900/70 via-zinc-900 to-zinc-900/70 border-zinc-700/70',
+        "dark: bg-gradient-to-bl from-zinc-900/70 via-zinc-900 to-zinc-900/70 border-zinc-700/70",
         className
-      )} onSubmit={handleSubmit}
+      )}
+      onSubmit={handleSubmit}
     >
       {/* File previews */}
       {files.length > 0 && (
@@ -214,7 +223,10 @@ export function PromptInput({
           )}
           aria-label="Submit message"
         >
-          <LoadingSwap isLoading={loading || submitting} className="flex items-center justify-center">
+          <LoadingSwap
+            isLoading={loading || submitting}
+            className="flex items-center justify-center"
+          >
             <ArrowUp size={18} />
           </LoadingSwap>
         </button>

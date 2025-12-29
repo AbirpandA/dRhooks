@@ -1,0 +1,381 @@
+---
+title: "Accordino"
+description: "An accessible accordion component for organizing content into collapsible sections with smooth animations."
+---
+
+<Tabs items={["Preview", "Code"]}>
+  <Tab>
+    <ComponentPreview name="accordino-demo"/>
+  </Tab>
+  <Tab>
+    <ComponentSource name="accordino"/>
+  </Tab>
+</Tabs>
+
+## Installation
+
+### CLI
+
+```npm
+npx shadcn@latest add https://dr-hooks.vercel.app/r/accordino.json
+```
+
+### Manual
+
+<Steps>
+  <Step>
+    <strong>Install the following dependencies</strong>
+    ```npm
+    npm install @radix-ui/react-accordion lucide-react
+    ```
+  </Step>
+
+  <Step>
+    <strong>Copy and paste the component</strong>
+    <ComponentSource name="accordino" />
+  </Step>
+
+  <Step>
+    <strong>Update your app imports</strong>
+    ```tsx
+    import { 
+      Accordion, 
+      AccordionItem, 
+      AccordionTrigger, 
+      AccordionContent 
+    } from "@/components/ui/accordino"
+    ```
+  </Step>
+</Steps>
+
+## Overview
+
+The Accordino component is a fully accessible accordion built on top of Radix UI's accordion primitives. It provides an elegant way to organize and present content in collapsible sections with smooth animations. Perfect for FAQs, documentation, settings panels, and any content-heavy interfaces where space is at a premium.
+
+### Key Features
+
+- **Fully Accessible**: Built with Radix UI primitives following WAI-ARIA patterns
+- **Smooth Animations**: Elegant open and close animations with CSS transitions
+- **Customizable**: All components export for full control over styling
+- **Single or Multiple**: Support for single or multiple expanded items
+- **Icon Integration**: Built-in chevron icon that rotates on expand
+- **Type-Safe**: Full TypeScript support with proper typing
+
+## Usage
+
+### Basic Usage
+
+Create a simple accordion with collapsible items:
+
+```tsx
+<Accordion type="single" collapsible className="w-full">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>Is it styled?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It comes with default styles that you can customize.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+### Common Patterns
+
+<Steps>
+  <Step>
+    <strong>Single Collapsible Items</strong>
+
+    Allow users to expand only one item at a time. Perfect for FAQs.
+
+    ```tsx
+    <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="faq-1">
+        <AccordionTrigger>What is your pricing?</AccordionTrigger>
+        <AccordionContent>
+          Our pricing starts at $29/month for the basic plan.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="faq-2">
+        <AccordionTrigger>Do you offer support?</AccordionTrigger>
+        <AccordionContent>
+          Yes, we offer 24/7 customer support for all plans.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+    ```
+  </Step>
+
+  <Step>
+    <strong>Multiple Expandable Items</strong>
+
+    Allow multiple items to be expanded simultaneously. Great for documentation.
+
+    ```tsx
+    <Accordion type="multiple" className="w-full">
+      <AccordionItem value="section-1">
+        <AccordionTrigger>Installation</AccordionTrigger>
+        <AccordionContent>
+          Install the component using npm or your package manager.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="section-2">
+        <AccordionTrigger>Configuration</AccordionTrigger>
+        <AccordionContent>
+          Configure the component with your preferred options.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="section-3">
+        <AccordionTrigger>API Reference</AccordionTrigger>
+        <AccordionContent>
+          View the complete API documentation and examples.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+    ```
+  </Step>
+
+  <Step>
+    <strong>With Default Expanded Items</strong>
+
+    Set default value to have an item expanded on initial load.
+
+    ```tsx
+    <Accordion type="single" defaultValue="item-1" className="w-full">
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Getting Started</AccordionTrigger>
+        <AccordionContent>
+          Start here to learn the basics of our product.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Advanced Features</AccordionTrigger>
+        <AccordionContent>
+          Explore advanced features and customization options.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+    ```
+  </Step>
+
+  <Step>
+    <strong>Custom Styled Content</strong>
+
+    Style the accordion items with custom classes.
+
+    ```tsx
+    <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="custom" className="border-l-4 border-blue-500">
+        <AccordionTrigger className="text-lg font-semibold">
+          Custom Styled Item
+        </AccordionTrigger>
+        <AccordionContent className="text-gray-600">
+          This item has custom styling applied.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+    ```
+  </Step>
+</Steps>
+
+## API Reference
+
+### Accordion
+
+The root accordion component that manages state and behavior.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `"single" \| "multiple"` | Required | Whether only one or multiple items can be expanded |
+| `value` | `string` | - | The controlled value of the open accordion item(s) |
+| `defaultValue` | `string` | - | The default open accordion item value |
+| `collapsible` | `boolean` | `false` | Whether items can be collapsed when type is "single" |
+| `disabled` | `boolean` | `false` | Whether the accordion is disabled |
+| `...props` | - | - | All Radix UI Accordion.Root props |
+
+### AccordionItem
+
+Container for each accordion section.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | Required | Unique identifier for the accordion item |
+| `disabled` | `boolean` | `false` | Whether this item is disabled |
+| `className` | `string` | - | Additional CSS classes for styling |
+| `...props` | - | - | All Radix UI Accordion.Item props |
+
+### AccordionTrigger
+
+The clickable header that expands/collapses content.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional CSS classes for styling |
+| `children` | `ReactNode` | Required | The trigger text or content |
+| `...props` | - | - | All Radix UI Accordion.Trigger props |
+
+### AccordionContent
+
+The content that is shown/hidden when an item is expanded.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional CSS classes for styling |
+| `children` | `ReactNode` | Required | The content to display |
+| `...props` | - | - | All Radix UI Accordion.Content props |
+
+## Examples
+
+### Example 1: FAQ Section
+
+A typical FAQ layout with common questions and answers.
+
+```tsx
+export default function FAQSection() {
+  return (
+    <div className="w-full max-w-2xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="q1">
+          <AccordionTrigger>What is included in the plan?</AccordionTrigger>
+          <AccordionContent>
+            Our plan includes all essential features including analytics, 
+            reporting, and team collaboration tools.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="q2">
+          <AccordionTrigger>Can I upgrade later?</AccordionTrigger>
+          <AccordionContent>
+            Yes, you can upgrade at any time. We offer flexible billing 
+            and you'll only pay the difference for the remainder of your billing cycle.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="q3">
+          <AccordionTrigger>Is there a free trial?</AccordionTrigger>
+          <AccordionContent>
+            We offer a 14-day free trial with full access to all features. 
+            No credit card required to start.
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  )
+}
+```
+
+### Example 2: Documentation with Multiple Sections
+
+Documentation or settings with multiple expandable sections.
+
+```tsx
+export default function DocumentationAccordion() {
+  return (
+    <Accordion type="multiple" className="w-full space-y-2">
+      <AccordionItem value="installation">
+        <AccordionTrigger className="font-semibold">Installation</AccordionTrigger>
+        <AccordionContent>
+          <code>npm install @mypackage/library</code>
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="usage">
+        <AccordionTrigger className="font-semibold">Basic Usage</AccordionTrigger>
+        <AccordionContent>
+          Import the component and use it in your application.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="api">
+        <AccordionTrigger className="font-semibold">API Reference</AccordionTrigger>
+        <AccordionContent>
+          View all available props and methods here.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+```
+
+## Key Concepts
+
+### Animation Details
+
+The Accordino component uses CSS animations for smooth transitions:
+- Opening: Smooth slide-down animation with fade-in
+- Closing: Smooth slide-up animation with fade-out
+- Chevron: Smooth 180-degree rotation on expand/collapse
+
+These animations are hardware-accelerated for optimal performance.
+
+### Accessibility
+
+Built on Radix UI's accordion primitives, Accordino follows WAI-ARIA guidelines:
+- Proper keyboard navigation (Arrow keys, Enter, Space)
+- Screen reader announcements for expanded/collapsed states
+- Focus management and visible focus indicators
+- Semantic HTML structure
+
+### Styling Architecture
+
+The component uses:
+- Base Tailwind classes for default styling
+- Border utilities for structure
+- Transition classes for smooth animations
+- Transform utilities for the chevron rotation
+
+## Best Practices
+
+<Callout>
+  Follow these guidelines to ensure optimal usage of the Accordino component.
+</Callout>
+
+<Steps>
+  <Step>
+    <strong>Use Clear, Concise Headers</strong>
+    <p>Keep accordion headers short and descriptive so users quickly understand what's inside.</p>
+  </Step>
+
+  <Step>
+    <strong>Choose the Right Type</strong>
+    <p>Use "single" for FAQs and "multiple" for documentation or settings where users need to compare sections.</p>
+  </Step>
+
+  <Step>
+    <strong>Avoid Nested Accordions</strong>
+    <p>Deeply nested accordions can be confusing. Consider alternative layouts for complex hierarchies.</p>
+  </Step>
+
+  <Step>
+    <strong>Provide Default Context</strong>
+    <p>Consider expanding the first item by default so users see content immediately.</p>
+  </Step>
+
+  <Step>
+    <strong>Group Related Content</strong>
+    <p>Organize accordion items logically so users can find related information easily.</p>
+  </Step>
+</Steps>
+
+## Accessibility
+
+The Accordino component is fully accessible:
+
+- **Keyboard Navigation**: Use Arrow Up/Down to navigate, Enter or Space to expand/collapse
+- **Screen Readers**: Full ARIA labeling for expanded/collapsed states
+- **Focus Management**: Clear focus indicators for keyboard navigation
+- **Semantic HTML**: Proper heading and button semantics
+- **ARIA Attributes**: Proper aria-expanded, aria-controls implementation
+
+## Technical Details
+
+<Callout>
+  The Accordino is built with accessibility and performance in mind.
+</Callout>
+
+- Built on Radix UI's accordion primitives for battle-tested accessibility
+- Uses React Context for state management
+- CSS animations for performant transitions
+- Full TypeScript support with proper typing
+- Works with Next.js and other React frameworks

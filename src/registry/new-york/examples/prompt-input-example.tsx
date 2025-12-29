@@ -1,7 +1,7 @@
 import React from "react";
 import { PromptInput } from "../ui/prompt-input";
 
- const PromptInputExample = () => {
+const PromptInputExample = () => {
   async function handleSubmit(value: string, files?: File[]) {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
@@ -14,15 +14,12 @@ import { PromptInput } from "../ui/prompt-input";
     });
   }
 
-  
-
   function handleError(error: Error) {
     console.error("Error during submission:", error);
   }
 
   return (
     <div className="">
-
       <PromptInput
         onsubmit={handleSubmit}
         onError={handleError}
@@ -30,11 +27,9 @@ import { PromptInput } from "../ui/prompt-input";
         loading={false}
         placeholder="Type your prompt here..."
         maxLength={3000}
-        
       />
     </div>
-
   );
-}
+};
 
-export default PromptInputExample
+export default PromptInputExample;
