@@ -29,9 +29,7 @@
       "name": "shimmer-text",
       "type": "registry:component",
       "description": "A text component that displays a shimmering loading effect.",
-      "dependencies": [
-        "motion/react"
-      ],
+      "dependencies": ["motion/react"],
       "files": [
         {
           "path": "src/registry/new-york/ui/shimmer-text.tsx",
@@ -43,15 +41,25 @@
       "name": "prompt-input",
       "type": "registry:component",
       "description": " A versatile input component for chat prompts with file attachment support.",
-      "dependencies": [
-        "lucide-react"
-      ],
+      "dependencies": ["lucide-react"],
       "registryDependencies": [
         "https://dr-hooks-6t7r69njm-abirpandas-projects.vercel.app/r/loading-swap.json"
       ],
       "files": [
         {
           "path": "src/registry/new-york/ui/prompt-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "accordino",
+      "type": "registry:component",
+      "description": "An accessible accordion component built with Radix UI primitives.",
+      "dependencies": ["@radix-ui/react-accordion", "lucide-react"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/accordino.tsx",
           "type": "registry:ui"
         }
       ]
@@ -71,9 +79,7 @@
       "name": "use-fetch",
       "type": "registry:component",
       "description": "A hook to fetch data from an API endpoint with loading and error states.",
-      "dependencies": [
-        "axios"
-      ],
+      "dependencies": ["axios"],
       "files": [
         {
           "path": "src/registry/new-york/hooks/use-fetch.ts",
