@@ -1,0 +1,104 @@
+name: ✨ Feature Request
+description: Suggest a new component, hook, or feature
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! We love hearing new ideas.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Feature Type
+      description: What type of feature are you requesting?
+      options:
+        - New Component
+        - New Hook
+        - Enhancement to existing component/hook
+        - Documentation improvement
+        - Developer experience
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Suggested Name
+      description: If proposing a new component/hook, what would you call it?
+      placeholder: e.g., ToastStack, useClipboard
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of the feature you'd like.
+      placeholder: Describe the feature in detail...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem it Solves
+      description: What problem does this feature solve? Is it related to a frustration?
+      placeholder: I'm always frustrated when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see.
+    validations:
+      required: true
+
+  - type: textarea
+    id: api
+    attributes:
+      label: Proposed API
+      description: If you have ideas about how the API should look, share them here.
+      render: tsx
+      placeholder: |
+        // For a component:
+        <MyComponent variant="primary" size="lg">
+          Content
+        </MyComponent>
+        
+        // For a hook:
+        const { data, isLoading } = useMyHook(options);
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions or features?
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples/References
+      description: |
+        Are there similar implementations in other libraries you can reference?
+        Include links if possible.
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I would be willing to help implement this feature
+          required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues/discussions to ensure this hasn't been requested
+          required: true
+        - label: This feature aligns with the shadcn/ui philosophy (composable, accessible, customizable)
+          required: true

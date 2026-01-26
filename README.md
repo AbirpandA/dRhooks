@@ -70,17 +70,14 @@ function App() {
 ## 🛠️ Component Integration
 
 1. **Choose a Component**
-
    - Browse the components in the `src/registry/new-york` directory
    - Check the component's documentation in `src/content/docs`
 
 2. **Copy the Code**
-
    - Copy the component code from the respective file
    - Paste it into your project's components directory
 
 3. **Install Dependencies**
-
    - Check the component's dependencies in its documentation
    - Install any required packages
 
@@ -92,16 +89,16 @@ function App() {
 
 ```bash
 # Install dependencies
-pnpm install
+yarn install
 
 # Start development server
-pnpm dev
+yarn dev
 
 # Build registry
-pnpm build:registry
+yarn build:registry
 
 # Build for production
-pnpm build
+yarn build
 ```
 
 ## 🐳 Docker Support
@@ -128,10 +125,10 @@ docker-compose down
 The Docker setup is optional - you can still use the regular Node.js development workflow if preferred. Most users who are just using the components and hooks in their own projects don't need to use Docker.
 
 ```
-pnpm build:registry
+yarn build:registry
 
 # Build documentation
-pnpm build:docs
+yarn build:docs
 ```
 
 ## 📚 Documentation
