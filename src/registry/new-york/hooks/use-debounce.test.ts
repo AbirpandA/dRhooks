@@ -12,7 +12,7 @@ describe("useDebounce", () => {
 
   it("should return the initial value immediately without delay", () => {
     const { result } = renderHook(() => useDebounce("initial", 300));
-    expect(result.current).toBe("initial");
+    expect(result.current.debounced).toBe("initial");
   });
   it("should update the debounce value after the specified delay", () => {
     const { result, rerender } = renderHook(
@@ -22,13 +22,13 @@ describe("useDebounce", () => {
       }
     );
 
-    expect(result.current).toBe("initial");
+    expect(result.current.debounced).toBe("initial");
 
     rerender({ value: "updated", delay: 300 });
 
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    expect(result.current).toBe("updated");
+    expect(result.current.debounced).toBe("updated");
   });
 });

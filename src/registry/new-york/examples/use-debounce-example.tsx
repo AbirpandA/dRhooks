@@ -5,7 +5,7 @@ import { useDebounce } from "../hooks/use-debounce";
 
 export default function UseDebounceDemo() {
   const [q, setQ] = useState("");
-  const debounced = useDebounce(q, 500);
+  const { debounced } = useDebounce(q, 500);
 
   return (
     <div className="space-y-2">

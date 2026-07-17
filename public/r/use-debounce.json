@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "src/registry/new-york/hooks/use-debounce.ts",
-      "content": "import { useEffect, useState } from \"react\";\n\nexport function useDebounce<T>(value: T, delay = 300) {\n  const [debounced, setDebounced] = useState(value);\n\n  useEffect(() => {\n    const id = setTimeout(() => setDebounced(value), delay);\n    return () => clearTimeout(id);\n  }, [value, delay]);\n\n  return debounced;\n}\n",
+      "content": "import { useEffect, useState, useRef,useCallback } from \"react\";\n\nexport function useDebounce<T>(value: T, delay = 300) {\n  const [debounced, setDebounced] = useState(value);\n  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);\n\n  const cancel = useCallback(() => {\n    if (timeoutRef.current) {\n      clearTimeout(timeoutRef.current);\n      timeoutRef.current = null;\n    }\n  }, []);\n\n\n  \n\n  const flush = useCallback(() => {\n    cancel();\n    setDebounced(value);\n  }, [value, cancel]);\n\n useEffect(() => {\n    // Clear any previous timeout before setting a new one\n    cancel();\n\n    timeoutRef.current = setTimeout(() => {\n      setDebounced(value);\n    }, delay);\n\n    // Cleanup on unmount or when value/delay changes\n    return cancel;\n  }, [value, delay, cancel]);\n\n  return {cancel,flush,debounced};\n}\n\n\n\n",
       "type": "registry:ui"
     }
   ]

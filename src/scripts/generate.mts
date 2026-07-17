@@ -323,7 +323,8 @@ const registryHookEntry = (name: string, description: string) => `  {
     ],
   },`;
 
-const registryExampleEntry = (name: string, isHook: boolean) => `  {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const registryExampleEntry = (name: string, _isHook: boolean) => `  {
     name: "${name}-example",
     type: "registry:example",
     title: "${toPascalCase(name)} Example",
