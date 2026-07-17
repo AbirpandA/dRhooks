@@ -6,4 +6,9 @@ const nextConfig: NextConfig = {
 };
 
 const withMDX = createMDX();
-export default withMDX(nextConfig);
+const finalConfig = withMDX(nextConfig);
+// Strip Turbopack options since it crashes Next 16 strict validation
+if (finalConfig.turbopack) {
+  delete finalConfig.turbopack;
+}
+export default finalConfig;
