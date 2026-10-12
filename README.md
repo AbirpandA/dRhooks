@@ -1,4 +1,4 @@
-# dRhooks 🎨
+# dRhooks 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
@@ -8,18 +8,18 @@
 
 A curated collection of high-quality React hooks and beautifully-designed UI components built on top of [shadcn/ui](https://ui.shadcn.com/). Built with TypeScript, React, and Tailwind CSS to supercharge your development workflow.
 
-## ✨ Features
+##  Features
 
-- 🎨 **Beautiful Components**: Extending shadcn/ui with new, carefully crafted components
-- 🎣 **Custom Hooks**: Collection of production-ready React hooks
-- 📦 **Zero-Install Usage**: Copy and paste what you need
-- 🎯 **TypeScript First**: Full type safety and autocompletion
-- 🎭 **Fully Customizable**: Adapt components to match your brand
-- ⚡ **Performance Focused**: Optimized for speed and efficiency
-- 📱 **Responsive Design**: Works seamlessly across all devices
-- ♿ **Accessible**: Following WCAG guidelines and best practices
+- **Beautiful Components**: Extending shadcn/ui with new, carefully crafted components
+- **Custom Hooks**: Collection of production-ready React hooks
+- **Zero-Install Usage**: Copy and paste what you need
+- **TypeScript First**: Full type safety and autocompletion
+- **Fully Customizable**: Adapt components to match your brand
+- **Performance Focused**: Optimized for speed and efficiency
+- **Responsive Design**: Works seamlessly across all devices
+- **Accessible**: Following WCAG guidelines and best practices
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -41,11 +41,11 @@ A curated collection of high-quality React hooks and beautifully-designed UI com
    - Ensure your project has Tailwind CSS configured
    - Add the required dependencies from the component you want to use
 
-## 📦 Available Components
+## Available Components
 
 ### UI Components
 
-- 🎨 **Interactive Elements**
+-  **Interactive Elements**
   - `<BounceButton />` - Interactive button with bounce animation
   - `<LoadingSwap />` - Smooth loading state transitions
   - `<ShimmerText />` - Text with attractive shimmer effect
@@ -67,7 +67,7 @@ function App() {
 }
 ```
 
-## 🛠️ Component Integration
+##  Component Integration
 
 1. **Choose a Component**
    - Browse the hooks and components in `src/registry/hooks` and `src/registry/ui`, or on the docs site
@@ -85,7 +85,7 @@ function App() {
    - Import and use the component in your application
    - Customize as needed using the provided props and styles
 
-## 🧪 Development
+##  Development
 
 ```bash
 # Install dependencies
@@ -140,7 +140,7 @@ Visit our documentation site for:
 - Customization guides
 - Performance tips
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please read our contributing guidelines before submitting a PR.
 
@@ -150,11 +150,11 @@ Contributions are welcome! Please read our contributing guidelines before submit
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgements
+##  Acknowledgements
 
 - [shadcn/ui](https://ui.shadcn.com/) for the amazing component foundation
 - [Radix UI](https://www.radix-ui.com/) for accessible primitives
