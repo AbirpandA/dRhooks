@@ -1,14 +1,20 @@
 import type { NextConfig } from "next";
-import { createMDX } from 'fumadocs-mdx/next';
+
+// Doc URLs that changed when pages moved next to their source.
+const renamedDocs = {
+  bounce_button: "bounce-button",
+  loading_swap: "loading-swap",
+  prompt_input: "prompt-input",
+} as const;
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return Object.entries(renamedDocs).map(([from, to]) => ({
+      source: `/docs/components/${from}`,
+      destination: `/docs/components/${to}`,
+      permanent: true,
+    }));
+  },
 };
 
-const withMDX = createMDX();
-const finalConfig = withMDX(nextConfig);
-// Strip Turbopack options since it crashes Next 16 strict validation
-if (finalConfig.turbopack) {
-  delete finalConfig.turbopack;
-}
-export default finalConfig;
+export default nextConfig;

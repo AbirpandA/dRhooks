@@ -6,58 +6,6 @@ dependencies: ["lucide-react"]
 registryDependencies: ["loading-swap"]
 ---
 
-<Tabs items={["Preview", "Code"]}>
-  <Tab>
-    <ComponentPreview name="prompt-input-demo"/>
-  </Tab>
-  <Tab>
-    <ComponentSource name="prompt-input"/>
-  </Tab>
-</Tabs>
-
-## Installation
-
-### CLI
-
-``` npm
-npx shadcn@latest add https://dr-hooks.vercel.app/r/prompt-input.json
-````
-
-### Manual
-
-<Steps>
-  <Step>
-    <strong>Install the following dependencies</strong>
-
-    This component uses `lucide-react` for icons and a custom [`LoadingSwap`](/docs/components/loading_swap) component. Ensure you have them installed and available.
-
-    ```npm
-    npm install lucide-react
-    ```
-    
-  </Step>
-
-  <Step>
-    <strong>Copy and paste the component</strong>
-
-    Copy the code for `prompt-input.tsx` (and `loading-swap.tsx` if you don't have it) into your project.
-
-    <ComponentSource name="prompt-input" />
-  </Step>
-
-  <Step>
-    <strong>Update your app imports</strong>
-
-    Update the import paths to match your project's file structure.
-
-    ```tsx
-    import { PromptInput } from "@/components/ui/prompt-input"
-    import { LoadingSwap } from "@/components/ui/loading-swap"
-    import { cn } from "@/lib/utils"
-    ```
-  </Step>
-</Steps>
-
 ## Overview
 
 The `PromptInput` component provides a rich interface for user input, similar to those found in modern AI chat applications. It's designed to handle text submission, optional file attachments, loading states, and error handling, all within a single, self-contained unit. Use it whenever you need to capture complex user prompts that may include both text and files.

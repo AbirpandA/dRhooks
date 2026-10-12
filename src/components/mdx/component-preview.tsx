@@ -2,10 +2,10 @@
 
 import * as React from "react";
 
-import { Index } from "@/__registry__";
+import { Examples } from "@/__registry__/examples";
 
 export const ComponentPreview: React.FC<{ name: string }> = ({ name }) => {
-  const Component = Index[name]?.component;
+  const Component = Examples[name];
 
   return (
     <div className="flex items-center justify-center bg-card rounded-lg border h-64">

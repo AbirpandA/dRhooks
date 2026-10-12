@@ -5,51 +5,6 @@ order: 50
 dependencies: ["@radix-ui/react-accordion", "lucide-react"]
 ---
 
-<Tabs items={["Preview", "Code"]}>
-  <Tab>
-    <ComponentPreview name="accordino-demo"/>
-  </Tab>
-  <Tab>
-    <ComponentSource name="accordino"/>
-  </Tab>
-</Tabs>
-
-## Installation
-
-### CLI
-
-```npm
-npx shadcn@latest add https://dr-hooks.vercel.app/r/accordino.json
-```
-
-### Manual
-
-<Steps>
-  <Step>
-    <strong>Install the following dependencies</strong>
-    ```npm
-    npm install @radix-ui/react-accordion lucide-react
-    ```
-  </Step>
-
-  <Step>
-    <strong>Copy and paste the component</strong>
-    <ComponentSource name="accordino" />
-  </Step>
-
-  <Step>
-    <strong>Update your app imports</strong>
-    ```tsx
-    import { 
-      Accordion, 
-      AccordionItem, 
-      AccordionTrigger, 
-      AccordionContent 
-    } from "@/components/ui/accordino"
-    ```
-  </Step>
-</Steps>
-
 ## Overview
 
 The Accordino component is a fully accessible accordion built on top of Radix UI's accordion primitives. It provides an elegant way to organize and present content in collapsible sections with smooth animations. Perfect for FAQs, documentation, settings panels, and any content-heavy interfaces where space is at a premium.

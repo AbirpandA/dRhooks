@@ -5,31 +5,6 @@ order: 20
 dependencies: ["axios"]
 ---
 
-<Tabs items={["CLI","Manual"]} className="pt-5 bg-transparent">
-  <Tab>
-    ```npm
-    npx shadcn@latest add https://dr-hooks.vercel.app/r/use-fetch.json
-    ```
-  </Tab>
-  <Tab>
-    <ComponentSource name="use-fetch" />
-  </Tab>
-</Tabs>
-
-### Dependencies
-
-This hook depends on:
-
-- `axios` (for HTTP requests and cancellation support)
-
-Install:
-
-```npm
-npm install axios
-```
-
----
-
 ## Overview
 
 `useFetch` is a small, type-safe React hook that wraps an axios GET request and exposes common request state: `data`, `error`, `loading`, and a `refetch` method. It automatically aborts previous requests when the URL or config changes and supports manual refetching.
@@ -57,7 +32,7 @@ Use `useFetch` when you need a lightweight data fetching hook with built-in canc
 ```tsx
 "use client"
 // [!code highlight]
-import { useFetch } from "@/registry/new-york/hooks/use-fetch";
+import { useFetch } from "@/hooks/use-fetch";
 
 function PostViewer({ id }: { id: number }) {
   // [!code focus]
@@ -96,7 +71,7 @@ interface Post {
 Customize the axios request via the `config` parameter (headers, params, etc.) and handle loading state for UI feedback.
 
 ```tsx
-import { useFetch } from "@/registry/new-york/hooks/use-fetch";
+import { useFetch } from "@/hooks/use-fetch";
 
 function Comments({ postId }: { postId: number }) {
   const { data, loading } = useFetch<Comment[]>(
@@ -145,8 +120,8 @@ type Comment = {
 
 | Value | Type | Description |
 |-------|------|-------------|
-| `data` | `T | null` | The fetched data, or `null` if not available. |
-| `error` | `AxiosError | null` | The axios error object when the request fails, or `null`. |
+| `data` | `T \| null` | The fetched data, or `null` if not available. |
+| `error` | `AxiosError \| null` | The axios error object when the request fails, or `null`. |
 | `loading` | `boolean` | `true` while the request is in-flight. |
 | `refetch` | `() => void` | Function to manually re-run the request with the current `url` and `config`. |
 
@@ -274,5 +249,3 @@ If `loading` never resolves, ensure you're not unintentionally changing `url` or
 - **useFetch (this hook)**: Lightweight, no-cache, abort-capable fetch hook
 
 ---
-
-If you'd like, I can also add a small example page under `src/registry/new-york/examples` that demonstrates combined usage with retry UI and error toasts.

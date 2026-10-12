@@ -1,5 +1,3 @@
-import type * as React from "react";
-
 export type RegistryCategory = "hooks" | "ui";
 
 export interface RegistryIndexFile {
@@ -14,8 +12,6 @@ export interface RegistryIndexEntry {
   description: string;
   type: string;
   files: RegistryIndexFile[];
-  /** Present on example entries only. */
-  component?: React.LazyExoticComponent<React.ComponentType>;
 }
 
 export type RegistryIndex = Record<string, RegistryIndexEntry>;

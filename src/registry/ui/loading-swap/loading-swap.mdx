@@ -5,46 +5,6 @@ order: 10
 dependencies: ["lucide-react"]
 ---
 
-<Tabs items={["Preview", "Code"]}>
-  <Tab>
-    <ComponentPreview name="loading-swap-demo"/>
-  </Tab>
-  <Tab>
-    <ComponentSource name="loading-swap"/>
-  </Tab>
-</Tabs>
-
-## Installation
-
-### CLI
-
-```npm
-npx shadcn@latest add https://dr-hooks.vercel.app/r/loading-swap.json
-```
-
-### Manual
-
-<Steps>
-  <Step>
-    <strong>Install the following dependencies</strong>
-    ```npm
-    npm install lucide-react
-    ```
-  </Step>
-
-  <Step>
-    <strong>Copy and paste the component</strong>
-    <ComponentSource name="loading-swap" />
-  </Step>
-
-  <Step>
-    <strong>Update your app imports</strong>
-    ```tsx
-    import { LoadingSwap } from "@/components/ui/loading-swap"
-    ```
-  </Step>
-</Steps>
-
 ## Overview
 
 The LoadingSwap component provides a clean and intuitive way to handle loading states in your UI. It smoothly transitions between your content and a loading spinner while maintaining layout stability, making it perfect for buttons, forms, or any interactive elements that involve asynchronous operations.

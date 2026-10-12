@@ -16,7 +16,6 @@ const eslintConfig = [
       "**/._*",
       "*.config.*",
       "src/__registry__/**",
-      ".source/**"
     ],
   },
   js.configs.recommended,

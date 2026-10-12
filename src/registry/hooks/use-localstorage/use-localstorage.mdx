@@ -4,25 +4,6 @@ description: "A hook to manage state synchronized with localStorage."
 order: 30
 ---
 
-## Installation
-
-<Tabs items={["CLI","Manual"]} className="pt-5 bg-transparent">
-	<Tab>
-		```npm
-		npx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
-		```
-	</Tab>
-	<Tab>
-		<ComponentSource name="use-localstorage" />
-	</Tab>
-</Tabs>
-
-### Dependencies
-
-This hook has **no external dependencies** and only uses built-in React APIs and the browser `localStorage`.
-
----
-
 ## Overview
 
 `useLocalStorage` provides a React stateful wrapper around `window.localStorage`. It reads a value (JSON-parsed) from localStorage on the client, exposes a state setter, and writes updates back to localStorage. The hook is SSR-safe: on the server it returns the provided `initialValue` and avoids accessing `window`.
@@ -41,7 +22,7 @@ This hook has **no external dependencies** and only uses built-in React APIs and
 ### Basic Usage
 
 ```tsx
-import { useLocalStorage } from "@/registry/new-york/hooks/use-localstorage";
+import { useLocalStorage } from "@/hooks/use-localstorage";
 
 function Demo() {
 	const [name, setName] = useLocalStorage<string>("name", "");

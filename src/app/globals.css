@@ -1,6 +1,4 @@
 @import 'tailwindcss';
-@import 'fumadocs-ui/css/black.css';
-@import 'fumadocs-ui/css/preset.css';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
@@ -77,7 +75,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --fd-layout-width: 1500px;
 }
 
 .dark {
@@ -123,3 +120,26 @@
   }
 }
 
+
+/* Code blocks: shiki dual themes expose --shiki-light / --shiki-dark per token. */
+.code-block,
+.code-block pre,
+.code-block code {
+  background: transparent;
+}
+.code-block pre {
+  margin: 0;
+}
+.code-block span[style*="--shiki-light"] {
+  color: var(--shiki-light);
+}
+.dark .code-block span[style*="--shiki-dark"] {
+  color: var(--shiki-dark);
+}
+.code-block code {
+  display: grid;
+  font-family: var(--font-mono);
+}
+.code-block [data-line] {
+  min-height: 1lh;
+}
