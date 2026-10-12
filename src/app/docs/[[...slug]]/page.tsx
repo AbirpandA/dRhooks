@@ -7,7 +7,11 @@ import { ComponentPreview } from "@/components/mdx/component-preview";
 import { ComponentSource } from "@/components/mdx/component-source";
 import { InstallTabs } from "@/components/mdx/install-tabs";
 import { PreviewTabs } from "@/components/mdx/preview-tabs";
-import { TableOfContents, type TocItem } from "@/components/mdx/toc";
+import {
+  CompactToc,
+  TableOfContents,
+  type TocItem,
+} from "@/components/mdx/toc";
 import { ItemCard } from "@/components/site/item-card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -181,11 +185,12 @@ function Layout({
       <article data-doc-content className="min-w-0 max-w-3xl flex-1 pb-16">
         {children}
       </article>
-      <aside className="hidden w-52 shrink-0 xl:block">
+      <aside className="hidden w-44 shrink-0 lg:block xl:w-52">
         <div className="sticky top-20 max-h-[calc(100svh-6rem)] overflow-y-auto pb-4">
           <TableOfContents items={toc} />
         </div>
       </aside>
+      <CompactToc items={toc} />
     </div>
   );
 }

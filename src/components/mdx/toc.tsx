@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { List } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -21,7 +22,8 @@ const clamp = (value: number, min = 0, max = 1) =>
  * each section has a dot on it, sections you have passed are highlighted, and
  * every entry jumps to its heading. The article is found via `[data-doc-content]`.
  */
-export function TableOfContents({ items }: { items: TocItem[] }) {
+/** Scroll tracking shared by the desktop rail and the compact variant. */
+function useReadingProgress(items: TocItem[]) {
   const itemRefs = React.useRef<(HTMLLIElement | null)[]>([]);
   const updateRef = React.useRef<() => void>(() => {});
   const [state, setState] = React.useState({ active: 0, fill: 0, progress: 0 });
@@ -90,6 +92,12 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
     };
   }, [items]);
 
+  return { itemRefs, updateRef, state };
+}
+
+export function TableOfContents({ items }: { items: TocItem[] }) {
+  const { itemRefs, updateRef, state } = useReadingProgress(items);
+
   // Sub-headings only open for the section being read, which keeps the rail short.
   const parents: number[] = [];
   items.forEach((item, index) => {
@@ -108,7 +116,7 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [openGroup]);
+  }, [openGroup, updateRef]);
 
   if (!items.length) return null;
 
@@ -186,5 +194,77 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
         <span>{left === 0 ? "Last section" : `${left} left`}</span>
       </p>
     </nav>
+  );
+}
+
+/**
+ * Below `lg` there is no room for the rail: a thin progress bar under the
+ * header plus a floating "On this page" menu that jumps to a section.
+ */
+export function CompactToc({ items }: { items: TocItem[] }) {
+  const { state } = useReadingProgress(items);
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  if (!items.length) return null;
+
+  return (
+    <>
+      <div
+        aria-hidden
+        className="bg-foreground fixed inset-x-0 top-14 z-40 h-0.5 origin-left transition-transform duration-150 lg:hidden"
+        style={{ transform: `scaleX(${state.progress})` }}
+      />
+      <div className="fixed right-4 bottom-4 z-40 lg:hidden">
+        {open && (
+          <nav
+            aria-label="On this page"
+            className="bg-popover text-popover-foreground absolute right-0 bottom-12 max-h-[60svh] w-64 overflow-y-auto rounded-xl border p-2 text-sm shadow-lg"
+          >
+            <ul>
+              {items.map((item, index) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={() => setOpen(false)}
+                    aria-current={
+                      index === state.active ? "location" : undefined
+                    }
+                    className={cn(
+                      "block rounded-md px-2 py-1.5 transition-colors",
+                      item.depth === 3 && "pl-5 text-[13px]",
+                      index === state.active
+                        ? "bg-accent text-foreground font-medium"
+                        : index < state.active
+                          ? "text-foreground/70 hover:bg-accent/60"
+                          : "text-muted-foreground hover:bg-accent/60"
+                    )}
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+        <button
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-expanded={open}
+          className="bg-background hover:bg-accent flex h-10 items-center gap-2 rounded-full border px-4 text-xs font-medium tabular-nums shadow-md transition-colors"
+        >
+          <List className="size-4" />
+          On this page · {Math.round(state.progress * 100)}%
+        </button>
+      </div>
+    </>
   );
 }
