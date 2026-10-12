@@ -3,9 +3,10 @@ import Link from "next/link";
 import type { MDXComponents } from "mdx/types";
 
 import { Callout } from "@/components/mdx/callout";
-import { ComponentPreview } from "@/components/mdx/component-preview";
+import { ComponentPreview as BareComponentPreview } from "@/components/mdx/component-preview";
 import { ComponentSource } from "@/components/mdx/component-source";
 import { CopyButton } from "@/components/mdx/copy-button";
+import { PreviewCanvas } from "@/components/mdx/preview-canvas";
 import { Tab, Tabs } from "@/components/mdx/mdx-tabs";
 import { Step, Steps } from "@/components/mdx/steps";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,17 @@ function Pre({ rawCode, className, children, ...props }: PreProps) {
       {rawCode && (
         <CopyButton value={rawCode} className="absolute top-3 right-3" />
       )}
+    </div>
+  );
+}
+
+/** `<ComponentPreview name="x-demo" />` in MDX: the example on its own framed canvas. */
+function FramedPreview({ name }: { name: string }) {
+  return (
+    <div className="bg-background my-6 overflow-hidden rounded-xl border">
+      <PreviewCanvas>
+        <BareComponentPreview name={name} />
+      </PreviewCanvas>
     </div>
   );
 }
@@ -149,7 +161,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     code: InlineCode,
     pre: Pre,
     Callout,
-    ComponentPreview,
+    ComponentPreview: FramedPreview,
     ComponentSource,
     Tabs,
     Tab,

@@ -4,19 +4,23 @@ import { useState } from "react";
 import { useDebounce } from "./use-debounce";
 
 export default function UseDebounceDemo() {
-  const [q, setQ] = useState("");
-  const { debounced } = useDebounce(q, 500);
+  const [query, setQuery] = useState("");
+  const { debounced } = useDebounce(query, 500);
 
   return (
-    <div className="space-y-2">
+    <div className="w-full space-y-4">
       <input
-        className="border px-2 py-1 rounded"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
+        className="border-input bg-background focus-visible:ring-ring/50 h-9 w-full rounded-md border px-3 text-sm shadow-xs outline-none focus-visible:ring-[3px]"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
         placeholder="Type to debounce"
       />
-      <div className="p-2 text-sm">Immediate: {q}</div>
-      <div className="p-2 text-sm">Debounced: {debounced}</div>
+      <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
+        <dt className="text-muted-foreground">Immediate</dt>
+        <dd className="truncate font-mono">{query || "-"}</dd>
+        <dt className="text-muted-foreground">Debounced (500ms)</dt>
+        <dd className="truncate font-mono">{debounced || "-"}</dd>
+      </dl>
     </div>
   );
 }

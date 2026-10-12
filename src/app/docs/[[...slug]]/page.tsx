@@ -87,10 +87,12 @@ function PageHeader({
   title,
   description,
   href,
+  crumb,
 }: {
   title: string;
   description?: string;
   href: string;
+  crumb?: { label: string; href: string };
 }) {
   const { prev, next } = getSiblings(href);
   const arrow = (link: NavLink | undefined, direction: "prev" | "next") =>
@@ -107,6 +109,22 @@ function PageHeader({
 
   return (
     <header className="space-y-2">
+      <p className="text-muted-foreground flex items-center gap-1.5 text-sm">
+        <Link href="/docs" className="hover:text-foreground transition-colors">
+          Docs
+        </Link>
+        {crumb && (
+          <>
+            <ChevronRight className="size-3.5" />
+            <Link
+              href={crumb.href}
+              className="hover:text-foreground transition-colors"
+            >
+              {crumb.label}
+            </Link>
+          </>
+        )}
+      </p>
       <div className="flex items-start justify-between gap-4">
         <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
         <div className="flex shrink-0 gap-1.5 pt-1">
@@ -160,9 +178,11 @@ function Layout({
 }) {
   return (
     <div className="flex gap-10 py-8">
-      <article className="min-w-0 max-w-3xl flex-1 pb-16">{children}</article>
+      <article data-doc-content className="min-w-0 max-w-3xl flex-1 pb-16">
+        {children}
+      </article>
       <aside className="hidden w-52 shrink-0 xl:block">
-        <div className="sticky top-20">
+        <div className="sticky top-20 max-h-[calc(100svh-6rem)] overflow-y-auto pb-4">
           <TableOfContents items={toc} />
         </div>
       </aside>
@@ -181,8 +201,13 @@ const H2 = ({ id, children }: { id: string; children: React.ReactNode }) => (
 
 async function ItemPage({ item }: { item: ManifestItem }) {
   const { content, toc: bodyToc } = await readDoc(item.mdxPath);
-  const main = `${item.name}-demo`;
-  const extra = item.examples.filter((example) => example.name !== main);
+  const mainName = `${item.name}-demo`;
+  const hasMain = item.examples.some((example) => example.name === mainName);
+  const extra = item.examples.filter((example) => example.name !== mainName);
+  const crumb = {
+    label: item.section === "hooks" ? "Hooks" : "Components",
+    href: `/docs/${item.section}`,
+  };
   const hasDeps =
     item.dependencies.length > 0 || item.registryDependencies.length > 0;
 
@@ -200,14 +225,17 @@ async function ItemPage({ item }: { item: ManifestItem }) {
         title={item.title}
         description={item.description}
         href={item.href}
+        crumb={crumb}
       />
 
-      <div className="mt-8">
-        <PreviewTabs
-          preview={<ComponentPreview name={main} />}
-          code={<ComponentSource name={main} />}
-        />
-      </div>
+      {hasMain && (
+        <div className="mt-8">
+          <PreviewTabs
+            preview={<ComponentPreview name={mainName} />}
+            code={<ComponentSource name={mainName} bare />}
+          />
+        </div>
+      )}
 
       <div className="mt-12 space-y-4">
         <H2 id="installation">Installation</H2>
@@ -266,7 +294,7 @@ async function ItemPage({ item }: { item: ManifestItem }) {
               <h3 className="text-lg font-semibold">{example.title}</h3>
               <PreviewTabs
                 preview={<ComponentPreview name={example.name} />}
-                code={<ComponentSource name={example.name} />}
+                code={<ComponentSource name={example.name} bare />}
               />
             </section>
           ))}
@@ -308,6 +336,7 @@ export default async function Page({ params }: PageProps) {
         title={data.title}
         description={data.description}
         href={resolved.href}
+        crumb={{ label: "Getting Started", href: "/docs" }}
       />
       <div className="mt-8">{content}</div>
       <PageFooter href={resolved.href} />

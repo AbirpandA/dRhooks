@@ -17,7 +17,7 @@ yarn test                 # Vitest in watch mode; use `yarn test --run` for a si
 yarn test src/registry/hooks/use-debounce/use-debounce.test.ts   # single file
 yarn test -t "should return the initial value"                   # single test by name
 yarn registry             # Rebuild src/__registry__/* and public/r/*.json (runs on postinstall)
-yarn new hook use-x ["description"] | yarn new ui x ["description"]   # Scaffold a complete item folder
+yarn new hook use-x ["description"] [--example] | yarn new ui x ["description"]   # Scaffold an item folder
 ```
 
 CI (`.github/workflows/ci.yml`, Node 24) runs `yarn registry`, fails if `public/r` differs from what is committed, then `lint`, `typecheck`, `test`. A husky pre-commit hook runs lint-staged (prettier + `eslint --fix` on `src/**`). Commits follow Conventional Commits (`feat:`, `fix:`, `docs:`, `test:`, `chore:` …).
@@ -29,12 +29,13 @@ There is **no hand-maintained registry list**. Each item is one folder, and `src
 ```
 src/registry/{hooks,ui}/<name>/
   <name>.ts(x)             shipped source (any file that is not a test/example/mdx/story)
-  <name>.example.tsx       main preview, default export; extra: <name>.<variant>.example.tsx
+  <name>.example.tsx       main preview, default export; required for ui, optional for hooks
+                           (extra: <name>.<variant>.example.tsx)
   <name>.test.ts(x)        colocated Vitest tests, never shipped
   <name>.mdx               docs prose + registry metadata in frontmatter
 ```
 
-Frontmatter (validated with zod, `.strict()`): `title`, `description`, optional `dependencies` (npm), `registryDependencies` (bare dRhooks item names, expanded to `https://dr-hooks.vercel.app/r/<name>.json`), `order`. Item name = folder name; category = parent folder. Build errors name the offending file (missing `.mdx`, missing main example, unknown key, unknown registry dependency).
+Frontmatter (validated with zod, `.strict()`): `title`, `description`, optional `dependencies` (npm), `registryDependencies` (bare dRhooks item names, expanded to `https://dr-hooks.vercel.app/r/<name>.json`), `order`. Item name = folder name; category = parent folder. Build errors name the offending file (missing `.mdx`, a `ui` item without a main example, unknown key, unknown registry dependency). `yarn registry --watch` does not reload its own script: restart `yarn dev` after editing `src/scripts/`.
 
 `yarn registry` writes:
 - `src/__registry__/index.tsx` — server-only `Index` (every file's source) for `ComponentSource`.
@@ -49,6 +50,7 @@ Frontmatter (validated with zod, `.strict()`): `title`, `description`, optional 
 - One route, `src/app/docs/[[...slug]]/page.tsx`: guide pages (`src/content/docs/*.mdx`), `/docs/hooks` and `/docs/components` listings, and item pages (`/docs/{hooks,components}/<name>`). `dynamicParams = false`.
 - The item page template renders title, preview/code tabs, and the Installation section (CLI + Manual with deps) itself. Item MDX files contain **prose only** (Overview, Usage, API).
 - `src/lib/mdx.tsx` compiles MDX with `next-mdx-remote/rsc` (remark-gfm, rehype-slug, rehype-pretty-code with dual github themes). It collects an h2/h3 TOC and passes each fence's raw text to the copy button. `HighlightedCode` uses shiki directly with the same themes; token colors come from `--shiki-light/--shiki-dark` in `globals.css`.
+- Example previews: `ComponentPreview` renders only the example; `PreviewCanvas` (shared by `PreviewTabs` and MDX `<ComponentPreview>`) provides the frame, padding and a `max-w-md` column. The right-hand `TableOfContents` is a reading-progress rail (`[data-doc-content]` marks the article; sub-headings expand for the current section only).
 - MDX components (`src/components/mdx/index.tsx`): `Callout`, `Tabs`/`Tab`, `Steps`/`Step`, `ComponentPreview`, `ComponentSource`.
 - Gotchas: in MDX tables escape pipes inside code (`T \| null`); `blockJS: false` is required for `<Tabs items={[...]}>`.
 

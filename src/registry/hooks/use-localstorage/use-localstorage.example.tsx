@@ -6,9 +6,9 @@ export default function UseLocalStorageDemo() {
   const [name, setName] = useLocalStorage("drhooks-demo-name", "");
 
   return (
-    <div className="w-full max-w-xs space-y-2">
+    <div className="w-full space-y-3">
       <input
-        className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        className="border-input bg-background focus-visible:ring-ring/50 h-9 w-full rounded-md border px-3 text-sm shadow-xs outline-none focus-visible:ring-[3px]"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Type, then refresh the page"

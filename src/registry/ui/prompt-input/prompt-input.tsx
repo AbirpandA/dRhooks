@@ -128,7 +128,7 @@ export function PromptInput({
   return (
     <form
       className={cn(
-        "relative  rounded-xl shadow-lg p-2  border  w-100",
+        "relative  rounded-xl shadow-lg p-2  border  w-full max-w-100",
         "dark: bg-gradient-to-bl from-zinc-900/70 via-zinc-900 to-zinc-900/70 border-zinc-700/70",
         className
       )}

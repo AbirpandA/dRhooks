@@ -111,6 +111,12 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

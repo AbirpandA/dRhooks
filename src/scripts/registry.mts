@@ -3,7 +3,8 @@
  *
  * Every item is a folder `src/registry/<hooks|ui>/<name>/` containing:
  *   <name>.ts(x)             shipped source (anything not matched below)
- *   <name>.example.tsx       main preview (extra: <name>.<variant>.example.tsx)
+ *   <name>.example.tsx       main preview: required for ui, optional for hooks
+ *                            (extra: <name>.<variant>.example.tsx)
  *   <name>.test.ts(x)        tests, never shipped
  *   <name>.mdx               docs; frontmatter holds the registry metadata
  *
@@ -127,7 +128,8 @@ const readItem = async (
   );
 
   const exampleNames = entries.filter(isExample);
-  if (!exampleNames.includes(`${name}.example.tsx`)) {
+  // Components need a live preview; for hooks an example is optional.
+  if (category === "ui" && !exampleNames.includes(`${name}.example.tsx`)) {
     throw new Error(
       `${rel(category, name)} needs a main example: ${name}.example.tsx`,
     );

@@ -8,10 +8,13 @@ export async function HighlightedCode({
   code,
   lang = "tsx",
   title,
+  bare = false,
 }: {
   code: string;
   lang?: string;
   title?: string;
+  /** Drop the border and radius when the block sits inside another card. */
+  bare?: boolean;
 }) {
   const html = await codeToHtml(code.replace(/\n$/, ""), {
     lang,
@@ -20,14 +23,20 @@ export async function HighlightedCode({
   });
 
   return (
-    <div className="bg-muted/40 relative overflow-hidden rounded-xl border">
+    <div
+      className={
+        bare
+          ? "relative"
+          : "bg-muted/40 relative overflow-hidden rounded-xl border"
+      }
+    >
       {title && (
         <div className="text-muted-foreground border-b px-4 py-2 font-mono text-xs">
           {title}
         </div>
       )}
       <div
-        className="code-block max-h-[32rem] overflow-auto text-[13px] leading-relaxed [&_pre]:p-4"
+        className="code-block max-h-[26rem] overflow-auto text-[13px] leading-relaxed [&_pre]:p-4"
         dangerouslySetInnerHTML={{ __html: html }}
       />
       <CopyButton

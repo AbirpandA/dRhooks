@@ -1,8 +1,10 @@
 /**
  * Scaffold a new registry item. Creates the whole folder; nothing to register.
  *
- *   yarn new hook use-toggle ["Short description"]
+ *   yarn new hook use-toggle ["Short description"] [--example]
  *   yarn new ui toast-stack ["Short description"]
+ *
+ * Components always get a live example; hooks only with --example.
  */
 import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -198,12 +200,14 @@ export default function Example() {
 };
 
 const main = async () => {
-  const [rawKind, name, descriptionArg] = process.argv.slice(2);
+  const args = process.argv.slice(2);
+  const withExample = args.includes("--example");
+  const [rawKind, name, descriptionArg] = args.filter((arg) => !arg.startsWith("--"));
   const kind = rawKind ? KINDS[rawKind] : undefined;
 
   if (!kind || !name) {
     console.error(`Usage:
-  yarn new hook <name> ["description"]   e.g. yarn new hook use-toggle
+  yarn new hook <name> ["description"] [--example]   e.g. yarn new hook use-toggle
   yarn new ui <name> ["description"]     e.g. yarn new ui toast-stack`);
     process.exit(1);
   }
@@ -231,6 +235,7 @@ const main = async () => {
   description ||= `TODO: describe ${name}.`;
 
   const files = kind === "hook" ? hookFiles(name, description) : uiFiles(name, description);
+  if (kind === "hook" && !withExample) delete files[`${name}.example.tsx`];
   await mkdir(dir, { recursive: true });
   for (const [file, content] of Object.entries(files)) {
     await writeFile(path.join(dir, file), content);

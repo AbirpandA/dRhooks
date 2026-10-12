@@ -76,7 +76,7 @@ Each item is a single folder, and **that folder is the only thing you edit**:
 ```
 src/registry/hooks/use-toggle/
 ├── use-toggle.ts            # the code users install
-├── use-toggle.example.tsx   # live preview shown on the docs page (default export)
+├── use-toggle.example.tsx   # optional for hooks, required for components: live preview (default export)
 ├── use-toggle.test.ts       # tests (never published)
 └── use-toggle.mdx           # docs prose + registry metadata in the frontmatter
 ```
@@ -88,11 +88,12 @@ There is no registry list to update. `yarn dev` and `yarn registry` discover eve
 ### 1. Scaffold it
 
 ```bash
-yarn new hook use-toggle "Toggle a boolean."
-yarn new ui toast-stack "Stacked toast notifications."
+yarn new hook use-toggle "Toggle a boolean."            # no preview
+yarn new hook use-toggle "Toggle a boolean." --example  # with a live preview
+yarn new ui toast-stack "Stacked toast notifications."  # components always get a preview
 ```
 
-This creates the folder above with working starter files. Hook names must start with `use-` and all names are kebab-case.
+This creates the folder above with working starter files. Hook names must start with `use-` and all names are kebab-case. Most hooks have nothing worth previewing, so a hook page simply starts at Installation when it has no example.
 
 ### 2. Fill in the metadata
 
@@ -108,12 +109,13 @@ order: 50                            # sidebar position (optional)
 ---
 ```
 
-Unknown keys, unknown `registryDependencies`, a missing example, or a missing docs page fail the build with the offending file path.
+Unknown keys, unknown `registryDependencies`, a component without an example, or a missing docs page fail the build with the offending file path.
 
 ### 3. Write the code, example, test and docs
 
 - Keep the shipped file self-contained. It may import `cn` from `@/lib/utils`, npm packages, or other dRhooks items (list those in `registryDependencies`).
-- The example must `export default` a component. It imports the item relatively (`./use-toggle`). Add more examples as `use-toggle.<variant>.example.tsx`; they appear under **Examples** on the docs page.
+- An example must `export default` a component and import the item relatively (`./use-toggle`). It is required for components and optional for hooks. Add more examples as `use-toggle.<variant>.example.tsx`; they appear under **Examples** on the docs page.
+- Examples render on a shared canvas: a centered column up to 448px wide with fixed padding. Give your root element `w-full` if it should fill the column, and do not add your own card or fixed width.
 - Write the MDX body as prose only: Overview, Usage, API reference. The page template already renders the title, preview, code, and install instructions for you.
 - Docs components available in MDX: `Callout`, `Tabs`/`Tab`, `Steps`/`Step`, `ComponentPreview`, `ComponentSource`.
 

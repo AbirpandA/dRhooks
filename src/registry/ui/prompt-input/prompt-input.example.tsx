@@ -19,7 +19,7 @@ const PromptInputExample = () => {
   }
 
   return (
-    <div className="">
+    <div className="flex w-full justify-center">
       <PromptInput
         onsubmit={handleSubmit}
         onError={handleError}
