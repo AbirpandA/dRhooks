@@ -1,0 +1,76 @@
+---
+title: "useDebounce"
+description: "A small hook to debounce a value."
+order: 10
+---
+
+## Overview
+
+`useDebounce` returns a debounced copy of a value. The copy only updates once the original has stopped changing for the given delay, which makes it a good fit for search inputs, live validation, and anything that would otherwise fire on every keystroke.
+
+The hook also returns `cancel` and `flush` so you can drop a pending update or apply it immediately.
+
+<Callout type="warning">
+  Delays under roughly 50ms rarely help. Pick 300-500ms for network calls and
+  150-250ms for purely visual updates.
+</Callout>
+
+## Usage
+
+```tsx
+import { useEffect, useState } from "react";
+import { useDebounce } from "@/hooks/use-debounce";
+
+export function Search() {
+  const [query, setQuery] = useState("");
+  const { debounced } = useDebounce(query, 300);
+
+  useEffect(() => {
+    // Runs 300ms after the user stops typing.
+    if (debounced) searchApi(debounced);
+  }, [debounced]);
+
+  return (
+    <input
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+### Applying or cancelling a pending update
+
+```tsx
+const { debounced, flush, cancel } = useDebounce(query, 500);
+
+// Apply the latest value right now, for example when the user presses Enter.
+<input onKeyDown={(e) => e.key === "Enter" && flush()} />;
+
+// Drop the pending update, for example when the user clears the field.
+<button onClick={cancel}>Clear</button>;
+```
+
+## API Reference
+
+### Parameters
+
+| Parameter | Type     | Default | Description                                        |
+| --------- | -------- | ------- | -------------------------------------------------- |
+| `value`   | `T`      | -       | The value to debounce. Any type.                   |
+| `delay`   | `number` | `300`   | Milliseconds to wait after the last change.        |
+
+### Return value
+
+| Property    | Type         | Description                                                            |
+| ----------- | ------------ | ---------------------------------------------------------------------- |
+| `debounced` | `T`          | The debounced value. Starts as the initial `value`.                    |
+| `flush`     | `() => void` | Cancels any pending timer and sets `debounced` to the current `value`. |
+| `cancel`    | `() => void` | Cancels any pending timer and leaves `debounced` unchanged.            |
+
+## Notes
+
+- The first render returns the initial value immediately, with no delay.
+- The timer is cleared on unmount and whenever `value` or `delay` changes, so there are no stale updates.
+- `debounced` keeps the type of `value`, so no casting is needed.

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-windowsize",
+  "type": "registry:hook",
+  "title": "useWindowSize",
+  "description": "A hook that tracks the browser window's width and height.",
+  "files": [
+    {
+      "path": "src/registry/hooks/use-windowsize/use-windowsize.ts",
+      "content": "import { useState, useEffect } from \"react\";\n\ninterface WindowSize {\n  width: number;\n  height: number;\n}\n\nexport function useWindowSize(): WindowSize {\n  const [windowSize, setWindowSize] = useState<WindowSize>({\n    width: typeof window !== \"undefined\" ? window.innerWidth : 0,\n    height: typeof window !== \"undefined\" ? window.innerHeight : 0,\n  });\n\n  useEffect(() => {\n    if (typeof window === \"undefined\") return;\n\n    const handleResize = () => {\n      setWindowSize({\n        width: window.innerWidth,\n        height: window.innerHeight,\n      });\n    };\n\n    window.addEventListener(\"resize\", handleResize);\n\n    handleResize();\n\n    return () => window.removeEventListener(\"resize\", handleResize);\n  }, []);\n\n  return windowSize;\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-windowsize.ts"
+    }
+  ]
+}

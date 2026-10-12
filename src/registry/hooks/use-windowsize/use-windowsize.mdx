@@ -1,0 +1,35 @@
+---
+title: "useWindowSize"
+description: "A hook that tracks the browser window's width and height."
+order: 40
+---
+
+## Overview
+
+`useWindowSize` returns the current `innerWidth` and `innerHeight` of the window and re-renders your component whenever the window is resized. It is SSR-safe: on the server it returns `{ width: 0, height: 0 }`, and the real size is applied after mount.
+
+## Usage
+
+```tsx
+import { useWindowSize } from "@/hooks/use-windowsize";
+
+function Banner() {
+  const { width } = useWindowSize();
+
+  return <p>{width < 640 ? "Mobile layout" : "Desktop layout"}</p>;
+}
+```
+
+## API Reference
+
+### Return value
+
+| Property | Type     | Description                       |
+| -------- | -------- | --------------------------------- |
+| `width`  | `number` | `window.innerWidth` in pixels.    |
+| `height` | `number` | `window.innerHeight` in pixels.   |
+
+<Callout type="warning">
+  The resize event fires continuously while dragging. If you do expensive work
+  with the size, pair it with [`useDebounce`](/docs/hooks/use-debounce).
+</Callout>

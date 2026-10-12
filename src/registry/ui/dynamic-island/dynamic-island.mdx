@@ -1,0 +1,145 @@
+---
+title: "DynamicIsland"
+description: "A headless, variant-driven morphing status pill in the style of the iOS Dynamic Island."
+dependencies: ["class-variance-authority", "lucide-react", "radix-ui"]
+order: 60
+---
+
+## Overview
+
+`DynamicIsland` is a single pill that floats at the edge of the screen and morphs between states: idle, loading, success, error, or rich expandable content like a media player. Think of it as a toast replacement with personality.
+
+It is built in three layers so you can use as much or as little as you want:
+
+- **Headless state:** `IslandProvider` and `useIsland()` own the lifecycle (show, update, dismiss, auto-dismiss, expand) and carry no styling.
+- **Headless primitives:** `Island.Root`, `Island.Leading`, `Island.Title`, `Island.Description`, `Island.Trailing` and `Island.Content` render plain elements with `data-*` attributes and support `asChild`.
+- **Variant-driven skin:** `islandVariants` (a `cva` recipe) and the ready-made `DynamicIsland` component.
+
+## Usage
+
+Wrap your app once and mount the island once.
+
+```tsx
+import { DynamicIsland, IslandProvider } from "@/components/ui/dynamic-island";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <IslandProvider>
+      {children}
+      <DynamicIsland />
+    </IslandProvider>
+  );
+}
+```
+
+Then trigger it from anywhere inside the provider.
+
+```tsx
+const island = useIsland();
+
+island.show({ variant: "success", title: "Saved", duration: 2500 });
+
+island.promise(saveDraft(), {
+  loading: "Saving…",
+  success: "Draft saved",
+  error: "Could not save",
+});
+```
+
+### Expandable content
+
+Pass `content` and the header becomes a toggle. Press <kbd>Esc</kbd> to collapse.
+
+```tsx
+island.show({
+  title: "Now playing",
+  description: "Midnight City · M83",
+  content: <Player />,
+});
+```
+
+### Inside a container
+
+By default the island is `fixed` to the viewport. Use `layout="absolute"` inside a `relative` parent, for example a phone mockup.
+
+```tsx
+<DynamicIsland layout="absolute" position="bottom" />
+```
+
+## Variants
+
+| Prop      | Values                                           | Default   |
+| --------- | ------------------------------------------------ | --------- |
+| `variant` | `default`, `success`, `error`, `warning`, `info` | `default` |
+| `size`    | `compact`, `default`, `expanded`                 | automatic |
+
+Size follows the content: `compact` for a title only, `default` when there is a description, `expanded` while open. Reuse the recipe on your own markup:
+
+```tsx
+import { islandVariants } from "@/components/ui/dynamic-island";
+
+<div className={islandVariants({ variant: "info", size: "default" })} />;
+```
+
+## Headless usage
+
+Skip the skin and bring your own styles. Every part sets `data-slot`, and the root also sets `data-variant`, `data-size` and `data-state`.
+
+```tsx
+<Island.Root variant="success" open className="my-pill">
+  <Island.Title asChild>
+    <h2>Payment received</h2>
+  </Island.Title>
+</Island.Root>
+```
+
+```css
+.my-pill[data-state="closed"] {
+  opacity: 0;
+}
+.my-pill[data-variant="success"] {
+  background: #052e16;
+}
+```
+
+## API Reference
+
+### `show(options)`
+
+| Option        | Type            | Description                                       |
+| ------------- | --------------- | ------------------------------------------------- |
+| `title`       | `ReactNode`     | Main text (required).                             |
+| `description` | `ReactNode`     | Secondary line.                                   |
+| `variant`     | `IslandVariant` | Colour and semantics.                             |
+| `size`        | `IslandSize`    | Force a size.                                     |
+| `leading`     | `ReactNode`     | Replaces the default icon.                        |
+| `trailing`    | `ReactNode`     | Content on the right of the header.               |
+| `content`     | `ReactNode`     | Revealed when expanded.                           |
+| `loading`     | `boolean`       | Shows a spinner as the leading icon.              |
+| `duration`    | `number`        | Auto-dismiss after this many ms; omit to persist. |
+
+### `useIsland()`
+
+| Member                    | Description                                           |
+| ------------------------- | ----------------------------------------------------- |
+| `show(options)`           | Open (or morph into) a new state.                     |
+| `update(patch)`           | Merge changes into the current state.                 |
+| `dismiss()`               | Close the island.                                     |
+| `promise(task, messages)` | Loading, then success or error. Resolves with `task`. |
+| `expanded`, `setExpanded` | Read or control the expanded state.                   |
+| `open`, `options`         | Current state.                                        |
+
+### `DynamicIsland` props
+
+| Prop        | Type                    | Default | Description                     |
+| ----------- | ----------------------- | ------- | ------------------------------- |
+| `position`  | `"top" \| "bottom"`     | `top`   | Which edge it sits on.          |
+| `layout`    | `"fixed" \| "absolute"` | `fixed` | Viewport or parent positioning. |
+| `className` | `string`                |         | Extra classes for the pill.     |
+
+## Accessibility
+
+- The pill is a live region: `role="status"` with `aria-live="polite"`, and `role="alert"` with `aria-live="assertive"` for the `error` variant.
+- The auto-dismiss timer pauses on hover, on focus and while expanded.
+- Expandable headers are real buttons with `aria-expanded`; collapsed content is `inert`.
+- Motion is disabled with `prefers-reduced-motion`.

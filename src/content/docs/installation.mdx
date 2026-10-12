@@ -1,0 +1,37 @@
+---
+title: "Installation"
+description: "Set up your project once, then add any hook or component with a single command."
+---
+
+## Requirements
+
+dRhooks items are written for a project that already uses shadcn/ui:
+
+- React 18 or newer
+- Tailwind CSS with the shadcn theme variables
+- The `cn` helper at `@/lib/utils`
+- A `components.json` file
+
+If you do not have these yet, run the shadcn setup first:
+
+```bash
+npx shadcn@latest init
+```
+
+## Add an item
+
+Pass the item's URL to `shadcn add`. Every page in these docs shows the exact command for that item.
+
+```bash
+npx shadcn@latest add https://dr-hooks.vercel.app/r/use-debounce.json
+```
+
+The CLI will:
+
+1. Install the npm packages the item needs.
+2. Install any other dRhooks items it depends on.
+3. Write the files into your project and print their locations.
+
+## Manual installation
+
+Prefer to copy by hand? Every item page has a **Manual** tab with the required packages and the complete source. Create the files in your project, adjust the import paths to match your aliases, and you are done.
