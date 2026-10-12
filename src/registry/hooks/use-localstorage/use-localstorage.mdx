@@ -1,0 +1,175 @@
+---
+title: "useLocalStorage"
+description: "A hook to manage state synchronized with localStorage."
+order: 30
+---
+
+## Installation
+
+<Tabs items={["CLI","Manual"]} className="pt-5 bg-transparent">
+	<Tab>
+		```npm
+		npx shadcn@latest add https://dr-hooks.vercel.app/r/use-localstorage.json
+		```
+	</Tab>
+	<Tab>
+		<ComponentSource name="use-localstorage" />
+	</Tab>
+</Tabs>
+
+### Dependencies
+
+This hook has **no external dependencies** and only uses built-in React APIs and the browser `localStorage`.
+
+---
+
+## Overview
+
+`useLocalStorage` provides a React stateful wrapper around `window.localStorage`. It reads a value (JSON-parsed) from localStorage on the client, exposes a state setter, and writes updates back to localStorage. The hook is SSR-safe: on the server it returns the provided `initialValue` and avoids accessing `window`.
+
+### Key Features
+
+- SSR-aware (guards against server environment)
+- JSON serialize/deserialize values
+- Removes keys when value is `null` or `undefined` (automatic cleanup)
+- Returns a stable `[value, setValue]` tuple like `useState`
+
+---
+
+## Usage
+
+### Basic Usage
+
+```tsx
+import { useLocalStorage } from "@/registry/new-york/hooks/use-localstorage";
+
+function Demo() {
+	const [name, setName] = useLocalStorage<string>("name", "");
+
+	return (
+		<div>
+			<input value={name} onChange={e => setName(e.target.value)} />
+			<p>Stored name: {name}</p>
+		</div>
+	);
+}
+```
+
+### Storing Objects
+
+```tsx
+type Settings = { theme: string; compact: boolean };
+
+function SettingsPanel() {
+	const [settings, setSettings] = useLocalStorage<Settings>("settings", { theme: "light", compact: false });
+
+	return (
+		<div>
+			<button onClick={() => setSettings(prev => ({ ...prev!, theme: "dark" }))}>Dark Theme</button>
+		</div>
+	);
+}
+```
+
+### Clearing a Value
+
+Setting the value to `null` or `undefined` will remove the key from `localStorage`.
+
+```tsx
+const [, setValue] = useLocalStorage<string | null>("token", null);
+// later
+setValue(null); // removes key from localStorage
+```
+
+---
+
+## API Reference
+
+### Signature
+
+```ts
+function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((prev: T) => T)) => void]
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `key` | `string` | Yes | The localStorage key to read/write. |
+| `initialValue` | `T` | Yes | The initial value to use when no stored value exists or when rendering on the server. |
+
+### Return Value
+
+| Value | Type | Description |
+|-------|------|-------------|
+| `[value, setValue]` | `[T, (v) => void]` | State tuple where `value` is the current value and `setValue` updates state and `localStorage`. The setter accepts either a direct value or an updater function (like `useState`). |
+
+---
+
+## Key Concepts
+
+### SSR Safety
+
+The hook checks for `typeof window === 'undefined'` and returns `initialValue` during server rendering to avoid accessing `localStorage` on the server.
+
+### Serialization
+
+Values are stored as JSON strings. Non-serializable values (functions, DOM nodes) will not be preserved. Prefer plain objects, arrays, strings, numbers, booleans, and null.
+
+### Automatic Cleanup
+
+If the stored value becomes `null` or `undefined`, the hook removes the corresponding key from `localStorage` instead of writing `null` as a string.
+
+---
+
+## Common Patterns
+
+- Persist user preferences (theme, layout)
+- Cache small amounts of read-mostly data between sessions
+- Remember last-used input values
+
+---
+
+## Best Practices
+
+<Callout>
+	Keep data small and JSON-serializable. localStorage is synchronous and blocks the main thread for large values.
+</Callout>
+
+<Steps>
+	<Step>
+		<strong>Keep values small</strong>
+		<p>Avoid large blobs or binary data; use IndexedDB for larger client-side storage.</p>
+	</Step>
+
+	<Step>
+		<strong>Avoid storing secrets</strong>
+		<p>localStorage is accessible to any script running on the page and is not secure for sensitive tokens.</p>
+	</Step>
+
+	<Step>
+		<strong>Use updater function when deriving from previous value</strong>
+		<p>Prefer `setValue(prev => ({ ...prev, updated: true }))` to avoid stale closures.</p>
+	</Step>
+</Steps>
+
+---
+
+## Troubleshooting
+
+### Nothing is saved
+
+- Check that code runs in the browser (not SSR) — the hook returns `initialValue` on the server.
+- Ensure your value is JSON-serializable.
+
+### Quota exceeded errors
+
+Large writes to localStorage can throw; catch and handle these errors gracefully in your app.
+
+---
+
+## Technical Details
+
+The hook reads from `localStorage` inside the lazy initializer for `useState` (so reads only occur on mount in the client), and writes in a `useEffect` when `value` changes. It logs friendly messages on read/write errors and removes the key when the value is `null` or `undefined`.
+
+---

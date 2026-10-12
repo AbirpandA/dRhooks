@@ -21,6 +21,17 @@ jobs:
             - name: Install dependencies
               run: yarn install --frozen-lockfile
 
+            - name: Build registry
+              run: yarn registry
+
+            - name: Check public/r is up to date
+              run: |
+                  if [ -n "$(git status --porcelain public/r)" ]; then
+                    echo "public/r is out of date. Run 'yarn registry' and commit the result."
+                    git status --porcelain public/r
+                    exit 1
+                  fi
+
             - name: Run lint
               run: yarn lint
 
@@ -28,7 +39,7 @@ jobs:
               run: yarn typecheck
 
             - name: Run tests
-              run: yarn test
+              run: yarn test --run
         
 
 
