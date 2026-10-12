@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Github } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/site/logo";
 import { MobileNav } from "@/components/site/mobile-nav";
 import { Search } from "@/components/site/search";
 import { ThemeToggle } from "@/components/site/theme-toggle";
@@ -18,12 +19,7 @@ export function SiteHeader({
     <header className="bg-background/80 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center gap-2 px-4 sm:px-6">
         {showMobileNav && <MobileNav groups={groups} />}
-        <Link href="/" className="mr-4 flex items-center gap-2 font-semibold">
-          <span className="bg-primary text-primary-foreground grid size-6 place-items-center rounded-md font-mono text-xs">
-            dR
-          </span>
-          {siteConfig.name}
-        </Link>
+        <Logo className="mr-4" />
         <nav className="text-muted-foreground hidden items-center gap-5 text-sm md:flex">
           <Link
             href="/docs"
