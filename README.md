@@ -70,8 +70,8 @@ function App() {
 ## 🛠️ Component Integration
 
 1. **Choose a Component**
-   - Browse the components in the `src/registry/new-york` directory
-   - Check the component's documentation in `src/content/docs`
+   - Browse the hooks and components in `src/registry/hooks` and `src/registry/ui`, or on the docs site
+   - Each item has its own folder with the code, a live example and its documentation
 
 2. **Copy the Code**
    - Copy the component code from the respective file
@@ -94,8 +94,14 @@ yarn install
 # Start development server
 yarn dev
 
-# Build registry
-yarn build:registry
+# Rebuild the registry (public/r) manually; `yarn dev` does this automatically
+yarn registry
+
+# Scaffold a new item
+yarn new hook use-toggle "Toggle a boolean."
+
+# Lint, typecheck and test
+yarn lint && yarn typecheck && yarn test --run
 
 # Build for production
 yarn build
@@ -123,13 +129,6 @@ docker-compose down
 - � **Documentation Testing**: Reliable environment for docs site
 
 The Docker setup is optional - you can still use the regular Node.js development workflow if preferred. Most users who are just using the components and hooks in their own projects don't need to use Docker.
-
-```
-yarn build:registry
-
-# Build documentation
-yarn build:docs
-```
 
 ## 📚 Documentation
 
