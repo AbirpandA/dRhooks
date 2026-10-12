@@ -41,7 +41,7 @@ Frontmatter (validated with zod, `.strict()`): `title`, `description`, optional 
 - `src/__registry__/index.tsx` — server-only `Index` (every file's source) for `ComponentSource`.
 - `src/__registry__/examples.tsx` — `"use client"` map of `React.lazy` example components for `ComponentPreview` (kept separate so source text is not bundled to the client).
 - `src/__registry__/manifest.ts` — typed page list driving sidebar, search, prev/next and `generateStaticParams` (`src/lib/docs.ts` wraps it).
-- `src/__registry__/registry.json` → `shadcn build` → `public/r/<name>.json` (committed; CI checks it is fresh). Hooks are published as `registry:hook`, components as `registry:ui`.
+- `src/__registry__/registry.json` → `shadcn build` → `public/r/<name>.json` (committed; CI checks it is fresh). Hooks are published as `registry:hook`, components as `registry:ui`. Each file has an explicit flat `target` (`hooks/<file>`, `components/ui/<file>`) so installs do not nest a folder.
 
 `src/__registry__/` is git-ignored and ESLint-ignored; never hand-edit it or `public/r/`.
 

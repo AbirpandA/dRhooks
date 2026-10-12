@@ -19,10 +19,7 @@ import { rimraf } from "rimraf";
 import { registrySchema, type Registry } from "shadcn/registry";
 import { z } from "zod";
 
-import type {
-  ManifestItem,
-  RegistryCategory,
-} from "../lib/registry-types.ts";
+import type { ManifestItem, RegistryCategory } from "../lib/registry-types.ts";
 
 const ROOT = process.cwd();
 const SOURCE_DIR = path.join(ROOT, "src/registry");
@@ -89,7 +86,7 @@ const isDoc = (file: string) => file.endsWith(".mdx");
 
 const readItem = async (
   category: RegistryCategory,
-  name: string,
+  name: string
 ): Promise<Item> => {
   const dir = path.join(SOURCE_DIR, category, name);
   const mdxPath = rel(category, name, `${name}.mdx`);
@@ -102,7 +99,7 @@ const readItem = async (
   const result = frontmatterSchema.safeParse(parsed.data);
   if (!result.success) {
     throw new Error(
-      `Invalid frontmatter in ${mdxPath}\n${z.prettifyError(result.error)}`,
+      `Invalid frontmatter in ${mdxPath}\n${z.prettifyError(result.error)}`
     );
   }
 
@@ -110,13 +107,11 @@ const readItem = async (
 
   const shippedNames = entries.filter(
     (file) =>
-      !isTest(file) && !isStory(file) && !isExample(file) && !isDoc(file),
+      !isTest(file) && !isStory(file) && !isExample(file) && !isDoc(file)
   );
   const main = shippedNames.find((file) => file.startsWith(`${name}.`));
   if (!main) {
-    throw new Error(
-      `${rel(category, name)} has no ${name}.ts(x) source file.`,
-    );
+    throw new Error(`${rel(category, name)} has no ${name}.ts(x) source file.`);
   }
   // Main file first: the docs "Code" tab shows `files[0]`.
   const ordered = [main, ...shippedNames.filter((file) => file !== main)];
@@ -124,21 +119,20 @@ const readItem = async (
     ordered.map(async (file) => ({
       path: rel(category, name, file),
       content: await readFile(path.join(dir, file), "utf-8"),
-    })),
+    }))
   );
 
   const exampleNames = entries.filter(isExample);
   // Components need a live preview; for hooks an example is optional.
   if (category === "ui" && !exampleNames.includes(`${name}.example.tsx`)) {
     throw new Error(
-      `${rel(category, name)} needs a main example: ${name}.example.tsx`,
+      `${rel(category, name)} needs a main example: ${name}.example.tsx`
     );
   }
   const examples: ExampleFile[] = await Promise.all(
     // `<name>.example.tsx` sorts before `<name>.<variant>.example.tsx`.
     exampleNames.map(async (file) => {
-      const variant = file
-        .slice(name.length + 1, -".example.tsx".length);
+      const variant = file.slice(name.length + 1, -".example.tsx".length);
       const base = file.replace(/\.tsx$/, "");
       return {
         name: variant ? `${name}-${variant}-demo` : `${name}-demo`,
@@ -147,7 +141,7 @@ const readItem = async (
         content: await readFile(path.join(dir, file), "utf-8"),
         importPath: `@/registry/${category}/${name}/${base}`,
       };
-    }),
+    })
   );
 
   return { name, category, meta: result.data, mdxPath, files, examples };
@@ -176,7 +170,7 @@ const readItems = async (): Promise<Item[]> => {
     for (const dep of item.meta.registryDependencies) {
       if (!names.has(dep)) {
         throw new Error(
-          `${item.mdxPath}: registryDependencies references unknown item "${dep}".`,
+          `${item.mdxPath}: registryDependencies references unknown item "${dep}".`
         );
       }
     }
@@ -186,7 +180,7 @@ const readItems = async (): Promise<Item[]> => {
     (a, b) =>
       a.category.localeCompare(b.category) ||
       a.meta.order - b.meta.order ||
-      a.name.localeCompare(b.name),
+      a.name.localeCompare(b.name)
   );
 };
 
@@ -205,10 +199,15 @@ const toRegistry = (items: Item[]): Registry => ({
       }),
       ...(item.meta.registryDependencies.length && {
         registryDependencies: item.meta.registryDependencies.map(
-          (dep) => `${BASE_URL}/r/${dep}.json`,
+          (dep) => `${BASE_URL}/r/${dep}.json`
         ),
       }),
-      files: item.files.map((file) => ({ path: file.path, type: itemType })),
+      // Flat install: `components/ui/<file>` and `hooks/<file>`, not a nested folder.
+      files: item.files.map((file) => ({
+        path: file.path,
+        type: itemType,
+        target: `${itemType === "registry:hook" ? "hooks" : "components/ui"}/${path.basename(file.path)}`,
+      })),
     };
   }),
 });
@@ -221,7 +220,7 @@ const toIndexSource = (items: Item[]) => {
         path: ${JSON.stringify(file.path)},
         content: ${JSON.stringify(file.content)},
         type: ${JSON.stringify(type)},
-      }`,
+      }`
       )
       .join(", ")}]`;
   const entry = (
@@ -229,7 +228,7 @@ const toIndexSource = (items: Item[]) => {
     title: string,
     description: string,
     type: string,
-    list: SourceFile[],
+    list: SourceFile[]
   ) => `  ${JSON.stringify(name)}: {
     name: ${JSON.stringify(name)},
     title: ${JSON.stringify(title)},
@@ -244,7 +243,7 @@ const toIndexSource = (items: Item[]) => {
       item.meta.title,
       item.meta.description,
       CATEGORIES[item.category].itemType,
-      item.files,
+      item.files
     ),
     ...item.examples.map((example) =>
       entry(
@@ -252,8 +251,8 @@ const toIndexSource = (items: Item[]) => {
         example.title,
         item.meta.description,
         "registry:example",
-        [example],
-      ),
+        [example]
+      )
     ),
   ]);
 
@@ -271,8 +270,8 @@ const toExamplesSource = (items: Item[]) => {
   const entries = items.flatMap((item) =>
     item.examples.map(
       (example) =>
-        `  ${JSON.stringify(example.name)}: React.lazy(() => import(${JSON.stringify(example.importPath)})),`,
-    ),
+        `  ${JSON.stringify(example.name)}: React.lazy(() => import(${JSON.stringify(example.importPath)})),`
+    )
   );
 
   return `"use client";
@@ -320,22 +319,28 @@ const build = async () => {
 
   const parsed = registrySchema.safeParse(registry);
   if (!parsed.success) {
-    throw new Error(`Registry failed shadcn validation\n${z.prettifyError(parsed.error)}`);
+    throw new Error(
+      `Registry failed shadcn validation\n${z.prettifyError(parsed.error)}`
+    );
   }
 
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(path.join(OUTPUT_DIR, "index.tsx"), toIndexSource(items));
   await writeFile(
     path.join(OUTPUT_DIR, "examples.tsx"),
-    toExamplesSource(items),
+    toExamplesSource(items)
   );
   await writeFile(
     path.join(OUTPUT_DIR, "manifest.ts"),
-    toManifestSource(items),
+    toManifestSource(items)
   );
   await writeFile(
     path.join(OUTPUT_DIR, "registry.json"),
-    JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry.json", ...parsed.data }, null, 2),
+    JSON.stringify(
+      { $schema: "https://ui.shadcn.com/schema/registry.json", ...parsed.data },
+      null,
+      2
+    )
   );
 
   // Clear first so deleted items don't leave stale /r/<name>.json behind.
@@ -343,11 +348,11 @@ const build = async () => {
   execFileSync(
     path.join(ROOT, "node_modules/.bin/shadcn"),
     ["build", path.join(OUTPUT_DIR, "registry.json"), "--output", PUBLIC_DIR],
-    { stdio: "inherit", cwd: ROOT },
+    { stdio: "inherit", cwd: ROOT }
   );
 
   console.log(
-    `Registry built: ${items.length} items, ${items.reduce((n, i) => n + i.examples.length, 0)} examples.`,
+    `Registry built: ${items.length} items, ${items.reduce((n, i) => n + i.examples.length, 0)} examples.`
   );
 };
 
