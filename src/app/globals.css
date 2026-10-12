@@ -143,3 +143,29 @@
 .code-block [data-line] {
   min-height: 1lh;
 }
+
+/* Notation transformers: [!code ++] / [!code --] / highlight / focus. */
+.code-block [data-line] {
+  padding-inline: 1rem;
+  margin-inline: -1rem;
+}
+.code-block .diff.add {
+  background: color-mix(in oklab, oklch(0.72 0.19 150) 16%, transparent);
+}
+.code-block .diff.remove {
+  background: color-mix(in oklab, var(--destructive) 16%, transparent);
+  opacity: 0.8;
+}
+.code-block [data-highlighted-line] {
+  background: color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+.code-block.has-focused .line:not(.focused),
+.code-block.has-focused [data-line]:not(.focused) {
+  opacity: 0.5;
+  filter: blur(0.5px);
+  transition: all 0.2s;
+}
+.code-block.has-focused:hover [data-line] {
+  opacity: 1;
+  filter: none;
+}

@@ -2,6 +2,11 @@ import * as React from "react";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Element, Root } from "hast";
+import {
+  transformerNotationDiff,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from "@shikijs/transformers";
 import { toString } from "hast-util-to-string";
 import { compileMDX } from "next-mdx-remote/rsc";
 import rehypePrettyCode, { type Options } from "rehype-pretty-code";
@@ -11,6 +16,7 @@ import { visit } from "unist-util-visit";
 
 import { getMDXComponents } from "@/components/mdx";
 import type { TocItem } from "@/components/mdx/toc";
+import { stripNotation } from "@/lib/strip-notation";
 
 export interface DocFrontmatter {
   title: string;
@@ -27,6 +33,12 @@ const prettyCodeOptions: Options = {
   keepBackground: false,
   // Fences like ```npm have no grammar; render them as plain text.
   defaultLang: { block: "plaintext" },
+  // Support `// [!code ++]`, `// [!code --]`, `highlight` and `focus` markers.
+  transformers: [
+    transformerNotationDiff(),
+    transformerNotationHighlight(),
+    transformerNotationFocus(),
+  ],
 };
 
 /** Collect h2/h3 after rehype-slug so ids match the rendered headings. */
@@ -56,7 +68,7 @@ const rehypeRawCodeBefore = () => (tree: Root) => {
       code?.type === "element" &&
       code.tagName === "code"
     ) {
-      node.rawCode = toString(code).replace(/\n$/, "");
+      node.rawCode = stripNotation(toString(code).replace(/\n$/, ""));
     }
   });
 };
